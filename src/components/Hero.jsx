@@ -183,7 +183,7 @@ const Hero = () => {
       </div>
 
       {/* MARQUEE - Mobile version with adjusted position */}
-      <div className="absolute bottom-50.5 left-0 right-0 overflow-hidden border-t border-gray-800 py-2 bg-black/50 backdrop-blur-sm md:hidden">
+      <div className="absolute bottom-30.5 left-0 right-0 overflow-hidden border-t border-gray-800 py-2 bg-black/50 backdrop-blur-sm md:hidden">
         <div className="flex animate-marquee whitespace-nowrap">
           {[
             "WEBGL", "◆", "THREE.JS", "◆", "GSAP", "◆", "CREATIVE CODE", "◆",
@@ -201,7 +201,7 @@ const Hero = () => {
       <motion.div
         animate={{ y: [0, 8, 0] }}
         transition={{ repeat: Infinity, duration: 1.5 }}
-        className="absolute bottom-40.5 left-1/2 transform -translate-x-1/2 cursor-pointer md:hidden z-20"
+        className="absolute bottom-20.5 left-1/2 transform -translate-x-1/2 cursor-pointer md:hidden z-20"
       >
         <FiArrowDown className="w-4 h-4 text-white/50" />
       </motion.div>
