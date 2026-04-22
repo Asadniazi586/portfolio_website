@@ -183,7 +183,7 @@ const Hero = () => {
       </div>
 
       {/* MARQUEE - Mobile version with adjusted position */}
-      <div className="absolute bottom-30.5 left-0 right-0 overflow-hidden border-t border-gray-800 py-2 bg-black/50 backdrop-blur-sm md:hidden">
+      <div className="absolute bottom-10.5 left-0 right-0 overflow-hidden border-t border-gray-800 py-2 bg-black/50 backdrop-blur-sm md:hidden">
         <div className="flex animate-marquee whitespace-nowrap">
           {[
             "WEBGL", "◆", "THREE.JS", "◆", "GSAP", "◆", "CREATIVE CODE", "◆",
