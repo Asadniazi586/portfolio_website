@@ -48,10 +48,10 @@ const Navbar = () => {
           <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent cursor-pointer"
+            className="text-2xl font-bold bg-linear-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent cursor-pointer"
             onClick={() => scrollToSection('home')}
           >
-            Portfolio
+            AK.
           </motion.div>
 
           {/* Desktop Menu */}
@@ -114,7 +114,7 @@ const Navbar = () => {
                   <motion.div
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent cursor-pointer"
+                    className="text-xl font-bold bg-linear-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent cursor-pointer"
                     onClick={() => {
                       scrollToSection('home');
                     }}

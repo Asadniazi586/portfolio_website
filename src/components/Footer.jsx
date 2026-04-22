@@ -37,7 +37,7 @@ const Footer = () => {
             className="text-left"
           >
             <div className="text-2xl font-bold bg-linear-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent mb-3">
-              Portfolio
+              AK.
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
              Meet MERN stack developer specializing in full-stack web applications with modern, responsive designs.

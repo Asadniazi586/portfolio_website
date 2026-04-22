@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -7,8 +7,11 @@ import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Background3D from './components/Background3D';
+import LoadingScreen from './components/LoadingScreen';
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -25,21 +28,30 @@ function App() {
     });
   }, []);
 
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+  };
+
   return (
-    <div className="relative min-h-screen">
-      <Background3D />
-      <div className="relative z-10">
-        <Navbar />
-        <main>
-          <Hero />
-          <About />
-          <Skills />
-          <Projects />
-          <Contact />
-        </main>
-        <Footer />
-      </div>
-    </div>
+    <>
+      <LoadingScreen onLoadingComplete={handleLoadingComplete} />
+      {!isLoading && (
+        <div className="relative min-h-screen">
+          <Background3D />
+          <div className="relative z-10">
+            <Navbar />
+            <main>
+              <Hero />
+              <About />
+              <Skills />
+              <Projects />
+              <Contact />
+            </main>
+            <Footer />
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 

@@ -96,3 +96,36 @@
     scroll-behavior: smooth;
   }
 }
+
+/* Marquee Animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+  width: fit-content;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Vertical text for scroll */
+.writing-mode-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  letter-spacing: 2px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .writing-mode-vertical {
+    writing-mode: horizontal-tb;
+  }
+}
