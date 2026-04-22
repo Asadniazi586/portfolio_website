@@ -4,6 +4,7 @@ import { FiArrowDown } from 'react-icons/fi';
 
 const Hero = () => {
   const [currentRole, setCurrentRole] = useState(0);
+
   const roles = [
     "immersive web experiences",
     "interactive 3D worlds",
@@ -19,7 +20,10 @@ const Hero = () => {
   }, []);
 
   return (
-    <section id="home" className="min-h-screen md:min-h-screen flex items-center justify-center relative overflow-hidden">
+    <section
+      id="home"
+      className="min-h-screen md:min-h-screen flex items-center justify-center relative overflow-hidden"
+    >
       <div className="container mx-auto px-4 text-center z-10">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -34,7 +38,9 @@ const Hero = () => {
             className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 mb-8 mt-8"
           >
             <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-            <span className="text-xs text-gray-400">Available for freelance projects</span>
+            <span className="text-xs text-gray-400">
+              Available for freelance projects
+            </span>
           </motion.div>
 
           {/* Name */}
@@ -86,12 +92,12 @@ const Hero = () => {
             and interactive storytelling.
           </motion.p>
 
-          {/* Buttons */}
+          {/* CTA Buttons */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="flex justify-center gap-4 mb-12"
+            className="flex justify-center gap-4 mb-10 md:mb-12"
           >
             <motion.a
               whileHover={{ scale: 1.05 }}
@@ -112,12 +118,12 @@ const Hero = () => {
             </motion.a>
           </motion.div>
 
-          {/* Stats FIXED */}
+          {/* STATS (FIXED APPLE STYLE SPACING) */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.8 }}
-            className="flex justify-center gap-12 md:gap-16 mb-20 md:mb-8"
+            className="flex justify-center gap-12 md:gap-16 mb-12 md:mb-8"
           >
             {[
               { value: "10+", label: "PROJECTS" },
@@ -125,36 +131,44 @@ const Hero = () => {
               { value: "100%", label: "CLIENT SATISFACTION" }
             ].map((stat, i) => (
               <div key={i}>
-                <div className="text-3xl md:text-4xl font-bold text-white tracking-tight">{stat.value}</div>
-                <div className="text-xs text-gray-500 tracking-wider">{stat.label}</div>
+                <div className="text-3xl md:text-4xl font-bold text-white tracking-tight">
+                  {stat.value}
+                </div>
+                <div className="text-xs text-gray-500 tracking-wider">
+                  {stat.label}
+                </div>
               </div>
             ))}
           </motion.div>
         </motion.div>
       </div>
 
-      {/* LEFT */}
+      {/* LEFT SIDE */}
       <motion.div className="absolute bottom-32 left-6 md:left-10 hidden lg:flex flex-col items-center gap-2">
-        <span className="text-white/70 text-[8px] writing-mode-vertical">CREATIVE DEVELOPER</span>
-        <div className="w-px h-6 bg-white/30"></div>
-        <span className="text-white/70 text-[8px] writing-mode-vertical">FAISALABAD, PK</span>
+        <span className="text-white/70 text-[8px] writing-mode-vertical">
+          CREATIVE DEVELOPER
+        </span>
+        <div className="w-px h-6 bg-white/30" />
+        <span className="text-white/70 text-[8px] writing-mode-vertical">
+          FAISALABAD, PK
+        </span>
       </motion.div>
 
-      {/* RIGHT */}
+      {/* RIGHT SIDE */}
       <motion.div
         animate={{ y: [0, 5, 0] }}
         transition={{ repeat: Infinity, duration: 1.5 }}
         className="absolute bottom-32 right-6 md:right-10 hidden md:flex flex-col items-center gap-2"
       >
-        <span className="text-white/70 text-[8px] writing-mode-vertical">SCROLL TO EXPLORE</span>
-        <div className="w-px h-6 bg-white/30"></div>
+        <span className="text-white/70 text-[8px] writing-mode-vertical">
+          SCROLL TO EXPLORE
+        </span>
+        <div className="w-px h-6 bg-white/30" />
         <FiArrowDown className="w-3 h-3 text-white/70" />
       </motion.div>
 
-    
-
-      {/* MARQUEE FIXED */}
-      <div className="absolute bottom-0 left-0 right-0 overflow-hidden border-t border-gray-800 py-3 pb-4 md:pb-3 bg-black/50 backdrop-blur-sm">
+      {/* MARQUEE (CLEAN APPLE STYLE ALIGNMENT) */}
+      <div className="absolute bottom-0 left-0 right-0 overflow-hidden border-t border-gray-800 py-3 md:py-3 bg-black/50 backdrop-blur-sm">
         <div className="flex animate-marquee whitespace-nowrap">
           {[
             "Framer motion", "◆", "THREE.JS", "◆", "GSAP", "◆", "CREATIVE CODE", "◆",
@@ -168,15 +182,14 @@ const Hero = () => {
         </div>
       </div>
 
-          {/* MOBILE ARROW FIXED */}
+      {/* MOBILE ARROW (CLEAN POSITION BELOW FLOW) */}
       <motion.div
         animate={{ y: [0, 8, 0] }}
         transition={{ repeat: Infinity, duration: 1.5 }}
-        className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 cursor-pointer md:hidden"
+        className="absolute -bottom-4.5 left-1/2 transform -translate-x-1/2 cursor-pointer md:hidden"
       >
         <FiArrowDown className="w-5 h-5 text-white/50" />
       </motion.div>
-
     </section>
   );
 };
