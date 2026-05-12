@@ -24,40 +24,33 @@ const LoadingScreen = ({ onLoadingComplete }) => {
           transition={{ duration: 0.6, ease: "easeInOut" }}
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black"
         >
-          {/* Animated grid background */}
           <div className="absolute inset-0 opacity-20">
             <div className="absolute inset-0" style={{
               backgroundImage: `linear-gradient(to right, #3b82f6 1px, transparent 1px),
                                 linear-gradient(to bottom, #3b82f6 1px, transparent 1px)`,
-              backgroundSize: '50px 50px',
+              backgroundSize: '40px 40px',
             }} />
           </div>
 
-          <div className="relative z-10 text-center">
-            {/* Morphing cube */}
+          <div className="relative z-10 text-center px-4">
             <motion.div
               animate={{
                 rotateX: [0, 360, 720],
                 rotateY: [0, 360, 720],
-                scale: [1, 1.2, 1],
-                borderRadius: [
-                  '0% 0% 0% 0%',
-                  '50% 50% 50% 50%',
-                  '0% 0% 0% 0%'
-                ]
+                scale: [1, 1.15, 1],
+                borderRadius: ['0% 0% 0% 0%', '50% 50% 50% 50%', '0% 0% 0% 0%']
               }}
               transition={{
                 duration: 2.5,
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
-              className="w-24 h-24 mx-auto mb-8 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
+              className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-6 sm:mb-8 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
               style={{
                 boxShadow: '0 0 50px rgba(59,130,246,0.5)'
               }}
             />
 
-            {/* Name with glow */}
             <motion.div
               animate={{
                 textShadow: [
@@ -67,12 +60,11 @@ const LoadingScreen = ({ onLoadingComplete }) => {
                 ]
               }}
               transition={{ duration: 1.5, repeat: Infinity }}
-              className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent mb-4"
+              className="text-4xl sm:text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent mb-4"
             >
               M.A.K
             </motion.div>
 
-            {/* Loading dots */}
             <div className="flex justify-center space-x-2">
               {[0, 1, 2].map((i) => (
                 <motion.div
@@ -86,7 +78,7 @@ const LoadingScreen = ({ onLoadingComplete }) => {
                     repeat: Infinity,
                     delay: i * 0.2
                   }}
-                  className="w-2 h-2 bg-blue-500 rounded-full"
+                  className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full"
                 />
               ))}
             </div>

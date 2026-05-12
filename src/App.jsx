@@ -8,6 +8,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Background3D from './components/Background3D';
 import LoadingScreen from './components/LoadingScreen';
+import WhatsAppWidget from './components/WhatsAppWidget';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -48,6 +49,7 @@ function App() {
               <Contact />
             </main>
             <Footer />
+            <WhatsAppWidget/>
           </div>
         </div>
       )}
