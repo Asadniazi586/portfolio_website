@@ -8,7 +8,7 @@ const WhatsAppWidget = () => {
   const [message, setMessage] = useState('');
   const [isVisible, setIsVisible] = useState(true);
 
-  const phoneNumber = "923001234567"; // Replace with your number
+  const phoneNumber = "923419443586"; // Replace with your number
 
   const predefinedMessages = [
     "Hi, I'm interested in discussing a project with you.",
