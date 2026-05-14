@@ -42,7 +42,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 sm:px-3 sm:py-1 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6 sm:mb-6"
+            className="inline-flex items-center gap-2 px-4 py-1.5 sm:px-3 sm:py-1 rounded-full bg-blue-500/10 border border-blue-500/20 mb-5 sm:mb-6"
           >
             <span className="w-2.5 h-2.5 sm:w-2 sm:h-2 bg-green-500 rounded-full animate-pulse" />
             <span className="text-[13px] sm:text-xs text-gray-300 whitespace-nowrap font-medium">
@@ -50,7 +50,7 @@ const Hero = () => {
             </span>
           </motion.div>
 
-          {/* NAME - Much larger with extra gap */}
+          {/* NAME - Much larger */}
           <motion.h1
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -59,13 +59,13 @@ const Hero = () => {
               type: "spring",
               stiffness: 180
             }}
-            className="text-[3.2rem] sm:text-5xl md:text-7xl font-bold mb-5 sm:mb-5 tracking-tight"
+            className="text-[3.2rem] sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-5 tracking-tight"
           >
             M. ASAD KHAN
           </motion.h1>
 
           {/* I BUILD - Larger */}
-          <div className="text-2xl sm:text-xl md:text-3xl text-gray-300 mb-6 sm:mb-6 px-2">
+          <div className="text-2xl sm:text-xl md:text-3xl text-gray-300 mb-5 sm:mb-6 px-2">
             <div className="flex justify-center items-center text-center flex-wrap sm:flex-nowrap gap-2">
               <span className="whitespace-nowrap text-2xl sm:text-xl md:text-3xl font-semibold">
                 I build
@@ -109,7 +109,7 @@ const Hero = () => {
               delay: 0.3,
               duration: 0.8
             }}
-            className="text-gray-300 text-base sm:text-base md:text-lg max-w-sm sm:max-w-2xl mx-auto mb-8 sm:mb-8 leading-relaxed px-4"
+            className="text-gray-300 text-base sm:text-base md:text-lg max-w-sm sm:max-w-2xl mx-auto mb-7 sm:mb-8 leading-relaxed px-4"
           >
             Software engineer & creative developer passionate about pushing
             the boundaries of what's possible in the browser — from
@@ -124,7 +124,7 @@ const Hero = () => {
               delay: 0.4,
               duration: 0.8
             }}
-            className="flex justify-center gap-5 sm:gap-4 mb-8 sm:mb-10 flex-wrap"
+            className="flex justify-center gap-5 sm:gap-4 mb-7 sm:mb-10 flex-wrap"
           >
             <motion.a
               whileHover={{ scale: 1.05 }}
