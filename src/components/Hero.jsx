@@ -37,7 +37,7 @@ const Hero = () => {
             ease: "easeOut"
           }}
         >
-          {/* AVAILABLE - Smaller text on mobile */}
+          {/* AVAILABLE */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
@@ -50,7 +50,7 @@ const Hero = () => {
             </span>
           </motion.div>
 
-          {/* NAME - Smaller on mobile */}
+          {/* NAME */}
           <motion.h1
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -64,7 +64,7 @@ const Hero = () => {
             M. ASAD KHAN
           </motion.h1>
 
-          {/* I BUILD - Smaller on mobile */}
+          {/* I BUILD */}
           <div className="text-xl sm:text-xl md:text-3xl text-gray-300 mb-5 sm:mb-6 px-2">
             <div className="flex justify-center items-center text-center flex-wrap sm:flex-nowrap gap-2">
               <span className="whitespace-nowrap text-xl sm:text-xl md:text-3xl font-semibold">
@@ -102,7 +102,7 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* DESCRIPTION - Smaller on mobile */}
+          {/* DESCRIPTION */}
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -117,7 +117,7 @@ const Hero = () => {
             WebGL and shaders to micro-animations and interactive storytelling.
           </motion.p>
 
-          {/* BUTTONS - Smaller on mobile */}
+          {/* BUTTONS */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -146,7 +146,7 @@ const Hero = () => {
             </motion.a>
           </motion.div>
 
-          {/* STATS - Smaller on mobile */}
+          {/* STATS */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -154,7 +154,7 @@ const Hero = () => {
               delay: 0.5,
               duration: 0.8
             }}
-            className="flex justify-center items-start gap-12 sm:gap-12 md:gap-16"
+            className="flex justify-center items-start gap-12 sm:gap-12 md:gap-16 mb-0 sm:mb-0"
           >
             {[
               { value: "10+", label: "PROJECTS" },
@@ -217,8 +217,11 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* MOBILE MARQUEE */}
+      {/* MOBILE MARQUEE - Added gap between stats and marquee */}
       <div className="absolute bottom-0 left-0 right-0 md:hidden">
+        {/* Extra gap spacer - adds space between stats and marquee */}
+        <div className="h-4 bg-transparent"></div>
+        
         <div className="marquee-container overflow-hidden border-t border-gray-800 bg-black/60 backdrop-blur-sm py-4">
           <div className="marquee-track inline-flex whitespace-nowrap">
             {[

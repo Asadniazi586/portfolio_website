@@ -129,7 +129,7 @@
   overflow-x: hidden;
 }
 
-/* ONLY MOBILE CHANGES - Smaller text sizes */
+/* ONLY MOBILE CHANGES - Added gap between stats and marquee */
 @media (max-width: 640px) {
   /* Hero takes full viewport height */
   #home {
@@ -145,6 +145,11 @@
   /* Reduce gap between nav and available badge */
   #home .container {
     padding-top: 0.5rem !important;
+  }
+
+  /* Add bottom margin to stats section for gap */
+  #home .flex.justify-center.items-start.gap-12 {
+    margin-bottom: 0.75rem !important;
   }
 
   /* About section - hidden until scroll */
@@ -166,7 +171,7 @@
     overflow-x: hidden;
   }
   
-  /* Mobile marquee - smaller text */
+  /* Mobile marquee */
   .marquee-track {
     animation: marquee 40s linear infinite !important;
   }
@@ -181,6 +186,11 @@
   #home .relative.inline-block {
     display: inline-flex !important;
     justify-content: center !important;
+  }
+  
+  /* Gap spacer between stats and marquee */
+  .h-4 {
+    height: 1rem !important;
   }
 }
 
