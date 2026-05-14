@@ -129,17 +129,22 @@
   overflow-x: hidden;
 }
 
-/* ONLY MOBILE CHANGES - Larger text & proper spacing */
+/* ONLY MOBILE CHANGES - Reduced top gap & proper centering */
 @media (max-width: 640px) {
   /* Hero takes full viewport height */
   #home {
     min-height: 100vh !important;
     height: auto !important;
-    padding-top: -1rem !important;
+    padding-top: 0 !important;
     padding-bottom: 0 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+  }
+
+  /* Reduce gap between nav and available badge */
+  #home .container {
+    padding-top: 0.5rem !important;
   }
 
   /* About section - hidden until scroll */
@@ -170,6 +175,12 @@
     font-size: 16px !important;
     margin-left: 1rem !important;
     margin-right: 1rem !important;
+  }
+  
+  /* Ensure I build line is properly centered */
+  #home .relative.inline-block {
+    display: inline-flex !important;
+    justify-content: center !important;
   }
 }
 
