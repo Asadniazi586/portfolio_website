@@ -135,7 +135,7 @@
   #home {
     min-height: 100vh !important;
     height: auto !important;
-    padding-top: 1rem !important;
+    padding-top: -1rem !important;
     padding-bottom: 0 !important;
     display: flex !important;
     align-items: center !important;
