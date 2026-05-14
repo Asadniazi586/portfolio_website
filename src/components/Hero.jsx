@@ -37,20 +37,20 @@ const Hero = () => {
             ease: "easeOut"
           }}
         >
-          {/* AVAILABLE - Reduced top padding on mobile */}
+          {/* AVAILABLE - Smaller text on mobile */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 sm:px-3 sm:py-1 rounded-full bg-blue-500/10 border border-blue-500/20 mb-5 sm:mb-6 mt-0 sm:mt-0"
+            className="inline-flex items-center gap-2 px-3 py-1 sm:px-3 sm:py-1 rounded-full bg-blue-500/10 border border-blue-500/20 mb-5 sm:mb-6 mt-0 sm:mt-0"
           >
-            <span className="w-2.5 h-2.5 sm:w-2 sm:h-2 bg-green-500 rounded-full animate-pulse" />
-            <span className="text-[13px] sm:text-xs text-gray-300 whitespace-nowrap font-medium">
+            <span className="w-2 h-2 sm:w-2 sm:h-2 bg-green-500 rounded-full animate-pulse" />
+            <span className="text-[11px] sm:text-xs text-gray-300 whitespace-nowrap font-medium">
               Available for freelance projects
             </span>
           </motion.div>
 
-          {/* NAME */}
+          {/* NAME - Smaller on mobile */}
           <motion.h1
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -59,22 +59,22 @@ const Hero = () => {
               type: "spring",
               stiffness: 180
             }}
-            className="text-[3.2rem] sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-5 tracking-tight"
+            className="text-[2.5rem] sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-5 tracking-tight"
           >
             M. ASAD KHAN
           </motion.h1>
 
-          {/* I BUILD - Properly centered */}
-          <div className="text-2xl sm:text-xl md:text-3xl text-gray-300 mb-5 sm:mb-6 px-2">
+          {/* I BUILD - Smaller on mobile */}
+          <div className="text-xl sm:text-xl md:text-3xl text-gray-300 mb-5 sm:mb-6 px-2">
             <div className="flex justify-center items-center text-center flex-wrap sm:flex-nowrap gap-2">
-              <span className="whitespace-nowrap text-2xl sm:text-xl md:text-3xl font-semibold">
+              <span className="whitespace-nowrap text-xl sm:text-xl md:text-3xl font-semibold">
                 I build
               </span>
 
               <div
                 className="relative inline-block"
                 style={{ 
-                  minWidth: '310px',
+                  minWidth: '290px',
                   width: 'auto'
                 }}
               >
@@ -87,7 +87,7 @@ const Hero = () => {
                     transition={{
                       duration: 0.5
                     }}
-                    className="absolute left-0 font-extrabold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent text-2xl sm:text-xl md:text-3xl whitespace-nowrap text-center"
+                    className="absolute left-0 font-extrabold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent text-xl sm:text-xl md:text-3xl whitespace-nowrap text-center"
                     style={{ left: '50%', transform: 'translateX(-50%)' }}
                   >
                     {roles[currentRole]}
@@ -95,14 +95,14 @@ const Hero = () => {
                 </AnimatePresence>
 
                 {/* Invisible placeholder */}
-                <span className="invisible font-extrabold whitespace-nowrap text-2xl sm:text-xl md:text-3xl block text-center">
+                <span className="invisible font-extrabold whitespace-nowrap text-xl sm:text-xl md:text-3xl block text-center">
                   {longestRole}
                 </span>
               </div>
             </div>
           </div>
 
-          {/* DESCRIPTION */}
+          {/* DESCRIPTION - Smaller on mobile */}
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -110,14 +110,14 @@ const Hero = () => {
               delay: 0.3,
               duration: 0.8
             }}
-            className="text-gray-300 text-base sm:text-base md:text-lg max-w-sm sm:max-w-2xl mx-auto mb-7 sm:mb-8 leading-relaxed px-4"
+            className="text-gray-300 text-[14px] sm:text-base md:text-lg max-w-sm sm:max-w-2xl mx-auto mb-7 sm:mb-8 leading-relaxed px-4"
           >
             Software engineer & creative developer passionate about pushing
             the boundaries of what's possible in the browser — from
             WebGL and shaders to micro-animations and interactive storytelling.
           </motion.p>
 
-          {/* BUTTONS */}
+          {/* BUTTONS - Smaller on mobile */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -125,13 +125,13 @@ const Hero = () => {
               delay: 0.4,
               duration: 0.8
             }}
-            className="flex justify-center gap-5 sm:gap-4 mb-7 sm:mb-10 flex-wrap"
+            className="flex justify-center gap-4 sm:gap-4 mb-7 sm:mb-10 flex-wrap"
           >
             <motion.a
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               href="#contact"
-              className="px-7 py-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white text-base sm:text-base font-semibold shadow-lg shadow-blue-500/20"
+              className="px-6 py-2.5 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white text-[14px] sm:text-base font-semibold shadow-lg shadow-blue-500/20"
             >
               Get In Touch
             </motion.a>
@@ -140,13 +140,13 @@ const Hero = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               href="#projects"
-              className="px-7 py-3 rounded-full border-2 border-blue-500 text-white text-base sm:text-base font-semibold hover:bg-blue-500/10 transition-all"
+              className="px-6 py-2.5 rounded-full border-2 border-blue-500 text-white text-[14px] sm:text-base font-semibold hover:bg-blue-500/10 transition-all"
             >
               View Work
             </motion.a>
           </motion.div>
 
-          {/* STATS */}
+          {/* STATS - Smaller on mobile */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -154,7 +154,7 @@ const Hero = () => {
               delay: 0.5,
               duration: 0.8
             }}
-            className="flex justify-center items-start gap-14 sm:gap-12 md:gap-16"
+            className="flex justify-center items-start gap-12 sm:gap-12 md:gap-16"
           >
             {[
               { value: "10+", label: "PROJECTS" },
@@ -162,10 +162,10 @@ const Hero = () => {
               { value: "100%", label: "SATISFACTION" }
             ].map((stat, i) => (
               <div key={i}>
-                <div className="text-3xl sm:text-3xl md:text-4xl font-bold text-white">
+                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
                   {stat.value}
                 </div>
-                <div className="text-xs sm:text-xs text-gray-400 tracking-wide whitespace-nowrap font-semibold mt-1.5">
+                <div className="text-[10px] sm:text-xs text-gray-400 tracking-wide whitespace-nowrap font-semibold mt-1.5">
                   {stat.label}
                 </div>
               </div>
@@ -219,7 +219,7 @@ const Hero = () => {
 
       {/* MOBILE MARQUEE */}
       <div className="absolute bottom-0 left-0 right-0 md:hidden">
-        <div className="marquee-container overflow-hidden border-t border-gray-800 bg-black/60 backdrop-blur-sm py-5">
+        <div className="marquee-container overflow-hidden border-t border-gray-800 bg-black/60 backdrop-blur-sm py-4">
           <div className="marquee-track inline-flex whitespace-nowrap">
             {[
               "WEBGL", "◆", "REACT", "◆", "NEXT.JS", "◆",
@@ -227,7 +227,7 @@ const Hero = () => {
               "TYPESCRIPT", "◆", "WEBFLOW", "◆", "NODE.JS", "◆",
               "EXPRESS", "◆", "MONGODB", "◆"
             ].map((tech, i) => (
-              <span key={i} className="mx-4 text-[15px] text-white font-bold tracking-wide">
+              <span key={i} className="mx-3 text-[13px] text-white font-bold tracking-wide">
                 {tech}
               </span>
             ))}
@@ -238,7 +238,7 @@ const Hero = () => {
               "TYPESCRIPT", "◆", "WEBFLOW", "◆", "NODE.JS", "◆",
               "EXPRESS", "◆", "MONGODB", "◆"
             ].map((tech, i) => (
-              <span key={`dup-${i}`} className="mx-4 text-[15px] text-white font-bold tracking-wide">
+              <span key={`dup-${i}`} className="mx-3 text-[13px] text-white font-bold tracking-wide">
                 {tech}
               </span>
             ))}
@@ -246,9 +246,9 @@ const Hero = () => {
         </div>
 
         {/* Animated Scroll Indicator */}
-        <div className="flex flex-col items-center justify-center py-3 bg-black/40 backdrop-blur-sm">
+        <div className="flex flex-col items-center justify-center py-2.5 bg-black/40 backdrop-blur-sm">
           <motion.div
-            animate={{ y: [0, 6, 0] }}
+            animate={{ y: [0, 5, 0] }}
             transition={{
               repeat: Infinity,
               duration: 1.2,
@@ -256,10 +256,10 @@ const Hero = () => {
             }}
             className="flex flex-col items-center gap-1"
           >
-            <div className="w-7 h-10 rounded-full border-2 border-white/30 flex justify-center items-start pt-2">
-              <FiArrowDown className="w-3 h-3 text-white/60 font-bold" />
+            <div className="w-6 h-9 rounded-full border-2 border-white/30 flex justify-center items-start pt-1.5">
+              <FiArrowDown className="w-2.5 h-2.5 text-white/60 font-bold" />
             </div>
-            <span className="text-white/50 text-[10px] tracking-wider font-semibold mt-1">SCROLL</span>
+            <span className="text-white/50 text-[8px] tracking-wider font-semibold mt-1">SCROLL</span>
           </motion.div>
         </div>
       </div>

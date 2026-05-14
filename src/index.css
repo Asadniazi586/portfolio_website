@@ -129,7 +129,7 @@
   overflow-x: hidden;
 }
 
-/* ONLY MOBILE CHANGES - Reduced top gap & proper centering */
+/* ONLY MOBILE CHANGES - Smaller text sizes */
 @media (max-width: 640px) {
   /* Hero takes full viewport height */
   #home {
@@ -166,15 +166,15 @@
     overflow-x: hidden;
   }
   
-  /* Mobile marquee - continuous animation */
+  /* Mobile marquee - smaller text */
   .marquee-track {
     animation: marquee 40s linear infinite !important;
   }
   
   .marquee-track span {
-    font-size: 16px !important;
-    margin-left: 1rem !important;
-    margin-right: 1rem !important;
+    font-size: 13px !important;
+    margin-left: 0.75rem !important;
+    margin-right: 0.75rem !important;
   }
   
   /* Ensure I build line is properly centered */
