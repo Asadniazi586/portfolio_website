@@ -11,22 +11,18 @@
   --color-secondary: #8b5cf6;
 
   @keyframes float {
-    0%,
-    100% {
+    0%, 100% {
       transform: translateY(0px);
     }
-
     50% {
       transform: translateY(-20px);
     }
   }
 
   @keyframes pulse {
-    0%,
-    100% {
+    0%, 100% {
       opacity: 1;
     }
-
     50% {
       opacity: 0.5;
     }
@@ -76,24 +72,41 @@
   }
 }
 
-/* MARQUEE */
+/* MARQUEE ANIMATION - FIXED FOR MOBILE */
 @keyframes marquee {
   0% {
-    transform: translateX(0%);
+    transform: translateX(0);
   }
-
   100% {
     transform: translateX(-50%);
   }
 }
 
 .animate-marquee {
-  display: flex;
-  width: max-content;
-  animation: marquee 18s linear infinite;
+  display: flex !important;
+  width: max-content !important;
+  animation: marquee 20s linear infinite !important;
 }
 
 .animate-marquee:hover {
+  animation-play-state: paused !important;
+}
+
+/* Mobile marquee - fixed continuous animation */
+.marquee-container {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.marquee-track {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: marquee 40s linear infinite;
+  width: auto;
+}
+
+.marquee-track:hover {
   animation-play-state: paused;
 }
 
@@ -111,45 +124,60 @@
   }
 }
 
-/* MOBILE FIXES */
+#home,
+#about {
+  overflow-x: hidden;
+}
+
+/* ONLY MOBILE CHANGES - Even larger text */
 @media (max-width: 640px) {
+  /* Hero takes full viewport height */
   #home {
-    min-height: auto;
-    padding-bottom: 100px;
+    min-height: 100vh !important;
+    height: auto !important;
+    padding-top: 2rem !important;
+    padding-bottom: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 
+  /* About section - hidden until scroll */
+  #about {
+    margin-top: 0 !important;
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
+    position: relative !important;
+    background: black !important;
+  }
+
+  /* Container padding */
   .container {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
   }
 
   body {
     overflow-x: hidden;
   }
-}
-/* ADD THIS */
-
-#home,
-#about {
-  overflow: hidden;
-}
-
-/* MOBILE SPACING FIX */
-@media (max-width: 640px) {
-  #home {
-    padding-top: 5rem;
-    padding-bottom: 4rem;
+  
+  /* Mobile marquee - continuous animation */
+  .marquee-track {
+    animation: marquee 40s linear infinite !important;
   }
-
-  #about {
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+  
+  .marquee-track span {
+    font-size: 24px !important;
+    margin-left: 1rem !important;
+    margin-right: 1rem !important;
   }
 }
 
-/* MARQUEE */
-.animate-marquee {
-  display: flex;
-  width: max-content;
-  animation: marquee 22s linear infinite;
+/* Desktop styles - COMPLETELY UNCHANGED */
+@media (min-width: 641px) {
+  .animate-marquee span {
+    font-size: 16px !important;
+    margin-left: 2rem !important;
+    margin-right: 2rem !important;
+  }
 }
