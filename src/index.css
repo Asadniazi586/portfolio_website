@@ -129,7 +129,7 @@
   overflow-x: hidden;
 }
 
-/* ONLY MOBILE CHANGES - Even larger text */
+/* ONLY MOBILE CHANGES - Larger text & proper spacing */
 @media (max-width: 640px) {
   /* Hero takes full viewport height */
   #home {
@@ -167,7 +167,7 @@
   }
   
   .marquee-track span {
-    font-size: 24px !important;
+    font-size: 16px !important;
     margin-left: 1rem !important;
     margin-right: 1rem !important;
   }
