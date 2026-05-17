@@ -130,7 +130,6 @@
 
 /* ==================== MOBILE DEVICES ==================== */
 @media (max-width: 640px) {
-  /* Hero section */
   #home {
     min-height: 100vh !important;
     height: auto !important;
@@ -141,14 +140,12 @@
     justify-content: center !important;
   }
 
-  /* Container spacing */
   #home .container {
     padding-top: 0.5rem !important;
     padding-left: 1rem !important;
     padding-right: 1rem !important;
   }
 
-  /* Available badge - larger text */
   #home .inline-flex {
     margin-bottom: 1rem !important;
     padding: 0.4rem 1rem !important;
@@ -158,14 +155,12 @@
     font-size: 0.8rem !important;
   }
 
-  /* Name - larger */
   #home h1 {
     font-size: 2.5rem !important;
     margin-bottom: 0.85rem !important;
     letter-spacing: -0.02em !important;
   }
 
-  /* I build text - larger */
   #home .text-xl {
     font-size: 1.35rem !important;
     margin-bottom: 0.85rem !important;
@@ -175,17 +170,14 @@
     font-size: 1.35rem !important;
   }
 
-  /* Role text - larger */
   #home .font-extrabold {
     font-size: 1.35rem !important;
   }
 
-  /* Animated text container width */
   #home .relative.inline-block {
     min-width: 340px !important;
   }
 
-  /* Description - larger */
   #home p {
     font-size: 0.95rem !important;
     margin-bottom: 1.35rem !important;
@@ -194,7 +186,6 @@
     padding-right: 0.5rem !important;
   }
 
-  /* Buttons - larger */
   #home .flex.justify-center.gap-4 {
     margin-bottom: 1.35rem !important;
     gap: 1rem !important;
@@ -214,7 +205,6 @@
     font-size: 0.95rem !important;
   }
 
-  /* Stats - larger numbers */
   #home .text-2xl {
     font-size: 1.7rem !important;
   }
@@ -228,12 +218,10 @@
     margin-top: 0.3rem !important;
   }
 
-  /* Stats margin */
   #home .flex.justify-center.items-start.gap-12 {
     margin-bottom: 0.5rem !important;
   }
 
-  /* About section */
   #about {
     margin-top: 0 !important;
     padding-top: 3rem !important;
@@ -242,7 +230,6 @@
     background: black !important;
   }
 
-  /* Container */
   .container {
     padding-left: 1rem !important;
     padding-right: 1rem !important;
@@ -252,7 +239,6 @@
     overflow-x: hidden;
   }
   
-  /* Mobile marquee */
   .marquee-track {
     animation: marquee 35s linear infinite !important;
   }
@@ -263,25 +249,15 @@
     margin-right: 0.85rem !important;
   }
   
-  /* I build centering */
-  #home .relative.inline-block {
-    display: inline-flex !important;
-    justify-content: center !important;
-    min-width: 280px !important;
-  }
-  
-  /* Spacer */
   .h-4 {
     height: 0.75rem !important;
   }
 
-  /* Marquee container */
   .marquee-container {
     padding-top: 0.7rem !important;
     padding-bottom: 0.7rem !important;
   }
-
-  /* Scroll indicator */
+  
   #home .flex.flex-col.items-center.justify-center.py-2\.5 {
     padding-top: 0.7rem !important;
     padding-bottom: 0.7rem !important;
@@ -294,6 +270,26 @@
   
   #home .text-\[8px\] {
     font-size: 0.65rem !important;
+  }
+
+  .projects-container {
+    scroll-behavior: smooth !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  
+  .project-card {
+    transform: translateZ(0) !important;
+    -webkit-transform: translateZ(0) !important;
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+    perspective: 1000px !important;
+    -webkit-perspective: 1000px !important;
+  }
+  
+  .marquee-container,
+  .marquee-track {
+    will-change: transform !important;
+    transform: translateZ(0) !important;
   }
 }
 
@@ -329,6 +325,43 @@
     margin-left: 2rem !important;
     margin-right: 2rem !important;
   }
+}
+
+/* ==================== PROJECTS CARD SMOOTH SCROLL ==================== */
+.project-card {
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease !important;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.projects-scroll-container {
+  transition: transform 0.15s cubic-bezier(0.23, 1, 0.32, 1) !important;
+  will-change: transform;
+}
+
+@media (max-width: 640px) {
+  .projects-scroll-container {
+    transition: transform 0.1s cubic-bezier(0.23, 1, 0.32, 1) !important;
+  }
+  
+  .project-card {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+}
+
+#projects .flex {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+#projects .flex::-webkit-scrollbar {
+  display: none !important;
 }
 
 /* ==================== WHATSAPP WIDGET STYLES ==================== */
@@ -389,4 +422,19 @@
     width: 3.5rem;
     height: 3.5rem;
   }
+}
+
+/* ==================== ADDITIONAL FIXES ==================== */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Fix for iOS momentum scrolling */
+body {
+  -webkit-overflow-scrolling: touch;
 }

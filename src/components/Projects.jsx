@@ -14,6 +14,7 @@ const Projects = () => {
 
   const stickyRef = useRef(null);
   const horizontalRef = useRef(null);
+  const rafRef = useRef(null);
 
   const [translateX, setTranslateX] = useState(0);
   const [maxTranslate, setMaxTranslate] = useState(0);
@@ -64,39 +65,26 @@ const Projects = () => {
     },
   ];
 
-  // Calculate max translation needed - FIXED to show last project properly
   useEffect(() => {
     const calculate = () => {
       if (!horizontalRef.current) return;
-
       const containerWidth = window.innerWidth;
       const projectsWidth = horizontalRef.current.scrollWidth;
-      
-      // Calculate visible area (container width minus padding)
       const visibleWidth = containerWidth - 48;
-      
-      // Calculate max translation to show last project completely
       let maxMove = projectsWidth - visibleWidth;
-      
-      // Add extra space to ensure last project is fully visible
       if (maxMove > 0) {
         maxMove = maxMove + 20;
       }
-      
       setMaxTranslate(Math.max(0, maxMove));
     };
-
     calculate();
     window.addEventListener('resize', calculate);
     return () => window.removeEventListener('resize', calculate);
   }, []);
 
-  // Smooth scroll animation and hide title on scroll
   useEffect(() => {
     const section = stickyRef.current;
     if (!section) return;
-
-    let rafId = null;
 
     const update = () => {
       const rect = section.getBoundingClientRect();
@@ -108,7 +96,6 @@ const Projects = () => {
         progress = Math.max(0, Math.min(progress, 1));
         setTranslateX(progress * maxTranslate);
         
-        // Hide title when scrolling starts (progress > 0)
         if (progress > 0.05) {
           setShowTitle(false);
         } else {
@@ -118,10 +105,10 @@ const Projects = () => {
     };
 
     const handleScroll = () => {
-      if (rafId) return;
-      rafId = requestAnimationFrame(() => {
+      if (rafRef.current) return;
+      rafRef.current = requestAnimationFrame(() => {
         update();
-        rafId = null;
+        rafRef.current = null;
       });
     };
 
@@ -130,7 +117,7 @@ const Projects = () => {
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      if (rafId) cancelAnimationFrame(rafId);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, [maxTranslate]);
 
@@ -151,12 +138,10 @@ const Projects = () => {
         height: `${Math.min(projects.length * 75, 500)}vh`,
       }}
     >
-      {/* STICKY AREA */}
       <div className="sticky top-0 h-screen overflow-hidden flex flex-col">
         <div className="flex-1 flex flex-col justify-center">
           <div className="w-full px-4 sm:px-6 md:px-8 lg:px-10">
             
-            {/* TITLE - Fades out when scrolling starts */}
             <motion.div
               ref={ref}
               initial={{ opacity: 1, y: 0 }}
@@ -170,22 +155,19 @@ const Projects = () => {
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3">
                 Featured Projects
               </h2>
-
               <div className="w-16 md:w-20 h-[2px] rounded-full mx-auto mb-3 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
-
               <p className="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed px-4">
                 A collection of selected projects showcasing my expertise in modern web development
               </p>
             </motion.div>
 
-            {/* PROJECTS - Slightly taller cards, properly showing last project */}
             <div className="overflow-visible">
               <div
                 ref={horizontalRef}
-                className="flex gap-4 md:gap-5 lg:gap-6 will-change-transform"
+                className="flex gap-4 md:gap-5 lg:gap-6 will-change-transform projects-scroll-container"
                 style={{
                   transform: `translate3d(-${translateX}px, 0, 0)`,
-                  transition: 'transform 0.08s linear',
+                  transition: 'transform 0.2s cubic-bezier(0.23, 1, 0.32, 1)',
                   paddingLeft: '12px',
                   paddingRight: 'calc(100% - 280px)',
                 }}
@@ -195,76 +177,32 @@ const Projects = () => {
                     key={index}
                     whileHover={{ y: -5 }}
                     transition={{ duration: 0.3 }}
-                    className="
-                      flex-shrink-0
-                      w-[320px]
-                      sm:w-[380px]
-                      md:w-[420px]
-                      bg-gradient-to-br
-                      from-gray-900/90
-                      to-gray-800/80
-                      rounded-2xl
-                      overflow-hidden
-                      border border-gray-700/50
-                      backdrop-blur-md
-                      shadow-xl
-                      group
-                    "
+                    className="project-card flex-shrink-0 w-[320px] sm:w-[380px] md:w-[420px] bg-gradient-to-br from-gray-900/90 to-gray-800/80 rounded-2xl overflow-hidden border border-gray-700/50 backdrop-blur-md shadow-xl group"
+                    style={{
+                      willChange: 'transform',
+                      transform: 'translateZ(0)',
+                    }}
                   >
-                    {/* IMAGE - Slightly taller (0.5x bigger) */}
                     <div className="relative h-48 sm:h-52 md:h-56 overflow-hidden">
                       <img
                         src={project.image}
                         alt={project.title}
                         loading="lazy"
-                        className="
-                          w-full
-                          h-full
-                          object-cover
-                          transition-transform
-                          duration-700
-                          ease-out
-                          group-hover:scale-110
-                        "
+                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                       />
-
-                      {/* OVERLAY BUTTON - Only Live Demo */}
-                      <div className="
-                        absolute inset-0
-                        bg-black/60
-                        opacity-0
-                        group-hover:opacity-100
-                        transition-all
-                        duration-500
-                        flex
-                        items-center
-                        justify-center
-                      ">
+                      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
                         <button
                           onClick={() => handleLinkClick(project.liveLink)}
-                          className="
-                            p-3 
-                            rounded-full 
-                            bg-blue-600 
-                            hover:bg-blue-700 
-                            transition-all 
-                            duration-300
-                            active:scale-95
-                            md:hover:scale-110
-                          "
+                          className="p-3 rounded-full bg-blue-600 hover:bg-blue-700 transition-all duration-300 active:scale-95 md:hover:scale-110"
                           aria-label="Live Demo"
                         >
                           <FiExternalLink className="text-white w-5 h-5" />
                         </button>
                       </div>
-
-                      {/* Mobile touch indicator */}
                       <div className="absolute bottom-2 right-2 bg-blue-600/80 rounded-full p-1.5 opacity-100 md:opacity-0 transition-opacity">
                         <FiExternalLink className="text-white w-3 h-3" />
                       </div>
                     </div>
-
-                    {/* CONTENT */}
                     <div className="p-4 md:p-5">
                       <h3 className="text-base md:text-lg font-bold mb-2 text-white group-hover:text-blue-400 transition-colors duration-300">
                         {project.title}
@@ -272,8 +210,6 @@ const Projects = () => {
                       <p className="text-gray-400 text-xs md:text-sm leading-relaxed mb-3 line-clamp-2">
                         {project.description}
                       </p>
-
-                      {/* TECH STACK */}
                       <div className="flex flex-wrap gap-1.5">
                         {project.tech.map((tech, i) => (
                           <span
