@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import Lenis from 'lenis';
+
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -14,19 +16,25 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ 
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
-      });
+    // ✅ LENIS INIT (smooth scroll engine)
+    const lenis = new Lenis({
+      duration: 1.2,
+      smoothWheel: true,
+      smoothTouch: false,
+      wheelMultiplier: 1,
     });
+
+    // make globally accessible for navbar scroll
+    window.lenis = lenis;
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    return () => lenis.destroy();
   }, []);
 
   const handleLoadingComplete = () => {
@@ -36,6 +44,7 @@ function App() {
   return (
     <>
       <LoadingScreen onLoadingComplete={handleLoadingComplete} />
+
       {!isLoading && (
         <div className="relative min-h-screen">
           <Background3D />
@@ -49,7 +58,7 @@ function App() {
               <Contact />
             </main>
             <Footer />
-            <WhatsAppWidget/>
+            <WhatsAppWidget />
           </div>
         </div>
       )}

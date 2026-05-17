@@ -72,7 +72,7 @@
   }
 }
 
-/* MARQUEE ANIMATION - FIXED FOR MOBILE */
+/* MARQUEE ANIMATION */
 @keyframes marquee {
   0% {
     transform: translateX(0);
@@ -92,7 +92,6 @@
   animation-play-state: paused !important;
 }
 
-/* Mobile marquee - fixed continuous animation */
 .marquee-container {
   overflow: hidden;
   width: 100%;
@@ -129,39 +128,121 @@
   overflow-x: hidden;
 }
 
-/* ONLY MOBILE CHANGES - Added gap between stats and marquee */
+/* ==================== MOBILE DEVICES ==================== */
 @media (max-width: 640px) {
-  /* Hero takes full viewport height */
+  /* Hero section */
   #home {
     min-height: 100vh !important;
     height: auto !important;
     padding-top: 0 !important;
-    padding-bottom: 0 !important;
+    padding-bottom: 85px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
   }
 
-  /* Reduce gap between nav and available badge */
+  /* Container spacing */
   #home .container {
     padding-top: 0.5rem !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
   }
 
-  /* Add bottom margin to stats section for gap */
+  /* Available badge - larger text */
+  #home .inline-flex {
+    margin-bottom: 1rem !important;
+    padding: 0.4rem 1rem !important;
+  }
+  
+  #home .inline-flex span:last-child {
+    font-size: 0.8rem !important;
+  }
+
+  /* Name - larger */
+  #home h1 {
+    font-size: 2.5rem !important;
+    margin-bottom: 0.85rem !important;
+    letter-spacing: -0.02em !important;
+  }
+
+  /* I build text - larger */
+  #home .text-xl {
+    font-size: 1.35rem !important;
+    margin-bottom: 0.85rem !important;
+  }
+  
+  #home .whitespace-nowrap.text-xl {
+    font-size: 1.35rem !important;
+  }
+
+  /* Role text - larger */
+  #home .font-extrabold {
+    font-size: 1.35rem !important;
+  }
+
+  /* Animated text container width */
+  #home .relative.inline-block {
+    min-width: 340px !important;
+  }
+
+  /* Description - larger */
+  #home p {
+    font-size: 0.95rem !important;
+    margin-bottom: 1.35rem !important;
+    line-height: 1.5 !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+
+  /* Buttons - larger */
+  #home .flex.justify-center.gap-4 {
+    margin-bottom: 1.35rem !important;
+    gap: 1rem !important;
+  }
+  
+  #home a.px-6 {
+    padding-left: 1.4rem !important;
+    padding-right: 1.4rem !important;
+  }
+  
+  #home a.py-2\.5 {
+    padding-top: 0.7rem !important;
+    padding-bottom: 0.7rem !important;
+  }
+  
+  #home a {
+    font-size: 0.95rem !important;
+  }
+
+  /* Stats - larger numbers */
+  #home .text-2xl {
+    font-size: 1.7rem !important;
+  }
+  
+  #home .gap-12 {
+    gap: 2rem !important;
+  }
+  
+  #home .text-\[10px\] {
+    font-size: 0.75rem !important;
+    margin-top: 0.3rem !important;
+  }
+
+  /* Stats margin */
   #home .flex.justify-center.items-start.gap-12 {
-    margin-bottom: 0.75rem !important;
+    margin-bottom: 0.5rem !important;
   }
 
-  /* About section - hidden until scroll */
+  /* About section */
   #about {
     margin-top: 0 !important;
-    padding-top: 4rem !important;
-    padding-bottom: 4rem !important;
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
     position: relative !important;
     background: black !important;
   }
 
-  /* Container padding */
+  /* Container */
   .container {
     padding-left: 1rem !important;
     padding-right: 1rem !important;
@@ -173,32 +254,139 @@
   
   /* Mobile marquee */
   .marquee-track {
-    animation: marquee 40s linear infinite !important;
+    animation: marquee 35s linear infinite !important;
   }
   
   .marquee-track span {
-    font-size: 13px !important;
-    margin-left: 0.75rem !important;
-    margin-right: 0.75rem !important;
+    font-size: 0.85rem !important;
+    margin-left: 0.85rem !important;
+    margin-right: 0.85rem !important;
   }
   
-  /* Ensure I build line is properly centered */
+  /* I build centering */
   #home .relative.inline-block {
     display: inline-flex !important;
     justify-content: center !important;
+    min-width: 280px !important;
   }
   
-  /* Gap spacer between stats and marquee */
+  /* Spacer */
   .h-4 {
-    height: 1rem !important;
+    height: 0.75rem !important;
+  }
+
+  /* Marquee container */
+  .marquee-container {
+    padding-top: 0.7rem !important;
+    padding-bottom: 0.7rem !important;
+  }
+
+  /* Scroll indicator */
+  #home .flex.flex-col.items-center.justify-center.py-2\.5 {
+    padding-top: 0.7rem !important;
+    padding-bottom: 0.7rem !important;
+  }
+  
+  #home .w-6.h-9 {
+    width: 1.6rem !important;
+    height: 2.4rem !important;
+  }
+  
+  #home .text-\[8px\] {
+    font-size: 0.65rem !important;
   }
 }
 
-/* Desktop styles - COMPLETELY UNCHANGED */
-@media (min-width: 641px) {
+/* ==================== TABLET DEVICES ==================== */
+@media (min-width: 641px) and (max-width: 1024px) {
+  #home .flex.justify-center.items-start.gap-12 {
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .animate-marquee span {
+    font-size: 14px !important;
+    margin-left: 1.5rem !important;
+    margin-right: 1.5rem !important;
+  }
+  
+  #home h1 {
+    font-size: 3rem !important;
+  }
+  
+  #home .text-xl {
+    font-size: 1.5rem !important;
+  }
+  
+  #home p {
+    font-size: 0.95rem !important;
+  }
+}
+
+/* ==================== DESKTOP DEVICES ==================== */
+@media (min-width: 1025px) {
   .animate-marquee span {
     font-size: 16px !important;
     margin-left: 2rem !important;
     margin-right: 2rem !important;
+  }
+}
+
+/* ==================== WHATSAPP WIDGET STYLES ==================== */
+.whatsapp-widget-container {
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 100;
+}
+
+.whatsapp-button {
+  width: 3rem;
+  height: 3rem;
+}
+
+.whatsapp-chat-modal {
+  bottom: 5rem;
+  right: 1rem;
+  width: calc(100vw - 2rem);
+  max-width: 22rem;
+}
+
+@media (max-width: 640px) {
+  .whatsapp-widget-container {
+    bottom: 95px;
+    right: 0.75rem;
+  }
+  
+  .whatsapp-chat-modal {
+    bottom: 145px;
+    right: 0.75rem;
+  }
+  
+  .whatsapp-button {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .whatsapp-widget-container {
+    bottom: 1.25rem;
+    right: 1.25rem;
+  }
+  
+  .whatsapp-button {
+    width: 3.25rem;
+    height: 3.25rem;
+  }
+}
+
+@media (min-width: 1025px) {
+  .whatsapp-widget-container {
+    bottom: 1.5rem;
+    right: 2rem;
+  }
+  
+  .whatsapp-button {
+    width: 3.5rem;
+    height: 3.5rem;
   }
 }

@@ -1,120 +1,295 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { FiExternalLink, FiGithub } from 'react-icons/fi';
-import Blog from '../assets/aiblog.png'
-import Doctor from '../assets/doctorpic.png'
+import { FiExternalLink } from 'react-icons/fi';
+
+import Blog from '../assets/aiblog.png';
+import Doctor from '../assets/doctorpic.png';
+
 const Projects = () => {
-  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
+  const [ref, inView] = useInView({
+    triggerOnce: false,
+    threshold: 0.1,
+  });
+
+  const stickyRef = useRef(null);
+  const horizontalRef = useRef(null);
+
+  const [translateX, setTranslateX] = useState(0);
+  const [maxTranslate, setMaxTranslate] = useState(0);
+  const [showTitle, setShowTitle] = useState(true);
 
   const projects = [
     {
       title: 'AI Blog Platform',
-      description: 'Next.js AI blog platform with intelligent content recommendations and seamless user experience.',
+      description: 'Next.js AI blog platform with intelligent content recommendations.',
       image: Blog,
-      tech: ['Next.js', 'Tailwind CSS', 'MongoDB', 'OpenAI API', 'Context API'],
+      tech: ['Next.js', 'Tailwind CSS', 'MongoDB', 'OpenAI API'],
       liveLink: 'https://ai-powered-blog-website-mcqj.onrender.com',
-      githubLink: 'https://github.com/Asadniazi586/Ai-powered-blog-website-using-Nextjs',
     },
     {
       title: 'Doctor Appointment Booking',
-      description: 'Healthcare platform with doctor search, appointment scheduling, and secure online payments.',
+      description: 'Healthcare platform with doctor search and appointment scheduling.',
       image: Doctor,
-      tech: ['React.js', 'Node/Express.js', 'MongoDB', 'Tailwind CSS', 'Stripe'],
-      liveLink: 'https://doctor-appointment-frontend-cz6v.onrender.com ',
-      githubLink: 'https://github.com/Asadniazi586/doctor-appointment-booking',
+      tech: ['React.js', 'Node.js', 'MongoDB', 'Tailwind CSS', 'Stripe'],
+      liveLink: 'https://doctor-appointment-frontend-cz6v.onrender.com',
     },
     {
       title: 'Social Media App',
-      description: 'Modern social platform with real-time chat, post sharing, and interactive features',
-      image: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600',
-      tech: ['React Native', 'Firebase', 'Socket.io', 'Redux', 'Tailwind'],
+      description: 'Modern social platform with real-time chat and post sharing.',
+      image: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=900',
+      tech: ['React Native', 'Firebase', 'Socket.io', 'Redux'],
       liveLink: '#',
-      githubLink: '#',
+    },
+    {
+      title: 'E-Commerce Platform',
+      description: 'Complete e-commerce solution with cart and payment integration.',
+      image: 'https://images.unsplash.com/photo-1557821552-17105176677c?w=900',
+      tech: ['React', 'Node.js', 'MongoDB', 'Redux', 'Stripe'],
+      liveLink: '#',
+    },
+    {
+      title: 'Portfolio 3D Website',
+      description: 'Immersive 3D portfolio with WebGL and Three.js animations.',
+      image: 'https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=900',
+      tech: ['Three.js', 'React', 'GSAP', 'WebGL'],
+      liveLink: '#',
+    },
+    {
+      title: 'Task Management System',
+      description: 'Collaborative task management with real-time updates.',
+      image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=900',
+      tech: ['Next.js', 'Prisma', 'PostgreSQL', 'Tailwind'],
+      liveLink: '#',
     },
   ];
 
-  // Function to handle link clicks
+  // Calculate max translation needed - FIXED to show last project properly
+  useEffect(() => {
+    const calculate = () => {
+      if (!horizontalRef.current) return;
+
+      const containerWidth = window.innerWidth;
+      const projectsWidth = horizontalRef.current.scrollWidth;
+      
+      // Calculate visible area (container width minus padding)
+      const visibleWidth = containerWidth - 48;
+      
+      // Calculate max translation to show last project completely
+      let maxMove = projectsWidth - visibleWidth;
+      
+      // Add extra space to ensure last project is fully visible
+      if (maxMove > 0) {
+        maxMove = maxMove + 20;
+      }
+      
+      setMaxTranslate(Math.max(0, maxMove));
+    };
+
+    calculate();
+    window.addEventListener('resize', calculate);
+    return () => window.removeEventListener('resize', calculate);
+  }, []);
+
+  // Smooth scroll animation and hide title on scroll
+  useEffect(() => {
+    const section = stickyRef.current;
+    if (!section) return;
+
+    let rafId = null;
+
+    const update = () => {
+      const rect = section.getBoundingClientRect();
+      const sectionHeight = section.offsetHeight;
+      const scrollableHeight = sectionHeight - window.innerHeight;
+      
+      if (scrollableHeight > 0) {
+        let progress = -rect.top / scrollableHeight;
+        progress = Math.max(0, Math.min(progress, 1));
+        setTranslateX(progress * maxTranslate);
+        
+        // Hide title when scrolling starts (progress > 0)
+        if (progress > 0.05) {
+          setShowTitle(false);
+        } else {
+          setShowTitle(true);
+        }
+      }
+    };
+
+    const handleScroll = () => {
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        update();
+        rafId = null;
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    update();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, [maxTranslate]);
+
   const handleLinkClick = (url) => {
     if (url && url !== '#') {
       window.open(url, '_blank', 'noopener,noreferrer');
     } else {
-      alert('Link coming soon!');
+      alert('Live demo coming soon!');
     }
   };
 
   return (
-    <section id="projects" className="py-20">
-      <div className="container mx-auto px-4">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 50 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">Featured Projects</h2>
-          <div className="w-24 h-1 bg-linear-to-r from-blue-500 to-purple-600 mx-auto rounded-full"></div>
-          <p className="text-gray-300 mt-4 max-w-2xl mx-auto">
-            Here are some of my best works that showcase my skills and creativity
-          </p>
-        </motion.div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
+    <section
+      ref={stickyRef}
+      id="projects"
+      className="relative bg-black"
+      style={{
+        height: `${Math.min(projects.length * 75, 500)}vh`,
+      }}
+    >
+      {/* STICKY AREA */}
+      <div className="sticky top-0 h-screen overflow-hidden flex flex-col">
+        <div className="flex-1 flex flex-col justify-center">
+          <div className="w-full px-4 sm:px-6 md:px-8 lg:px-10">
+            
+            {/* TITLE - Fades out when scrolling starts */}
             <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-              whileHover={{ y: -10 }}
-              className="bg-gray-800 rounded-xl overflow-hidden shadow-xl group cursor-pointer"
+              ref={ref}
+              initial={{ opacity: 1, y: 0 }}
+              animate={{ 
+                opacity: showTitle ? 1 : 0,
+                y: showTitle ? 0 : -20
+              }}
+              transition={{ duration: 0.4 }}
+              className="text-center mb-6 md:mb-8"
             >
-              <div className="relative overflow-hidden h-48">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4">
-                  <motion.button
-                    onClick={() => handleLinkClick(project.liveLink)}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="p-2 bg-white/10 rounded-full backdrop-blur-sm hover:bg-white/20 transition-all"
-                    aria-label="Live Demo"
-                  >
-                    <FiExternalLink className="w-5 h-5 text-white" />
-                  </motion.button>
-                  <motion.button
-                    onClick={() => handleLinkClick(project.githubLink)}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="p-2 bg-white/10 rounded-full backdrop-blur-sm hover:bg-white/20 transition-all"
-                    aria-label="GitHub Repository"
-                  >
-                    <FiGithub className="w-5 h-5 text-white" />
-                  </motion.button>
-                </div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2 group-hover:text-blue-500 transition-colors">
-                  {project.title}
-                </h3>
-                <p className="text-gray-400 mb-4 text-sm leading-relaxed">{project.description}</p>
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map((tech, i) => (
-                    <span
-                      key={i}
-                      className="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded-full font-medium"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3">
+                Featured Projects
+              </h2>
+
+              <div className="w-16 md:w-20 h-[2px] rounded-full mx-auto mb-3 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
+
+              <p className="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed px-4">
+                A collection of selected projects showcasing my expertise in modern web development
+              </p>
             </motion.div>
-          ))}
+
+            {/* PROJECTS - Slightly taller cards, properly showing last project */}
+            <div className="overflow-visible">
+              <div
+                ref={horizontalRef}
+                className="flex gap-4 md:gap-5 lg:gap-6 will-change-transform"
+                style={{
+                  transform: `translate3d(-${translateX}px, 0, 0)`,
+                  transition: 'transform 0.08s linear',
+                  paddingLeft: '12px',
+                  paddingRight: 'calc(100% - 280px)',
+                }}
+              >
+                {projects.map((project, index) => (
+                  <motion.div
+                    key={index}
+                    whileHover={{ y: -5 }}
+                    transition={{ duration: 0.3 }}
+                    className="
+                      flex-shrink-0
+                      w-[320px]
+                      sm:w-[380px]
+                      md:w-[420px]
+                      bg-gradient-to-br
+                      from-gray-900/90
+                      to-gray-800/80
+                      rounded-2xl
+                      overflow-hidden
+                      border border-gray-700/50
+                      backdrop-blur-md
+                      shadow-xl
+                      group
+                    "
+                  >
+                    {/* IMAGE - Slightly taller (0.5x bigger) */}
+                    <div className="relative h-48 sm:h-52 md:h-56 overflow-hidden">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        loading="lazy"
+                        className="
+                          w-full
+                          h-full
+                          object-cover
+                          transition-transform
+                          duration-700
+                          ease-out
+                          group-hover:scale-110
+                        "
+                      />
+
+                      {/* OVERLAY BUTTON - Only Live Demo */}
+                      <div className="
+                        absolute inset-0
+                        bg-black/60
+                        opacity-0
+                        group-hover:opacity-100
+                        transition-all
+                        duration-500
+                        flex
+                        items-center
+                        justify-center
+                      ">
+                        <button
+                          onClick={() => handleLinkClick(project.liveLink)}
+                          className="
+                            p-3 
+                            rounded-full 
+                            bg-blue-600 
+                            hover:bg-blue-700 
+                            transition-all 
+                            duration-300
+                            active:scale-95
+                            md:hover:scale-110
+                          "
+                          aria-label="Live Demo"
+                        >
+                          <FiExternalLink className="text-white w-5 h-5" />
+                        </button>
+                      </div>
+
+                      {/* Mobile touch indicator */}
+                      <div className="absolute bottom-2 right-2 bg-blue-600/80 rounded-full p-1.5 opacity-100 md:opacity-0 transition-opacity">
+                        <FiExternalLink className="text-white w-3 h-3" />
+                      </div>
+                    </div>
+
+                    {/* CONTENT */}
+                    <div className="p-4 md:p-5">
+                      <h3 className="text-base md:text-lg font-bold mb-2 text-white group-hover:text-blue-400 transition-colors duration-300">
+                        {project.title}
+                      </h3>
+                      <p className="text-gray-400 text-xs md:text-sm leading-relaxed mb-3 line-clamp-2">
+                        {project.description}
+                      </p>
+
+                      {/* TECH STACK */}
+                      <div className="flex flex-wrap gap-1.5">
+                        {project.tech.map((tech, i) => (
+                          <span
+                            key={i}
+                            className="px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[9px] md:text-[10px] font-medium"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
