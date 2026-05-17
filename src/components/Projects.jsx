@@ -164,23 +164,23 @@ const Projects = () => {
             <div className="overflow-visible">
               <div
                 ref={horizontalRef}
-                className="flex gap-4 md:gap-5 lg:gap-6 will-change-transform projects-scroll-container"
+                className="flex gap-4 md:gap-5 lg:gap-6"
                 style={{
                   transform: `translate3d(-${translateX}px, 0, 0)`,
-                  transition: 'transform 0.2s cubic-bezier(0.23, 1, 0.32, 1)',
+                  transition: 'transform 0.08s linear',
                   paddingLeft: '12px',
                   paddingRight: 'calc(100% - 280px)',
+                  willChange: 'transform',
                 }}
               >
                 {projects.map((project, index) => (
-                  <motion.div
+                  <div
                     key={index}
-                    whileHover={{ y: -5 }}
-                    transition={{ duration: 0.3 }}
-                    className="project-card flex-shrink-0 w-[320px] sm:w-[380px] md:w-[420px] bg-gradient-to-br from-gray-900/90 to-gray-800/80 rounded-2xl overflow-hidden border border-gray-700/50 backdrop-blur-md shadow-xl group"
+                    className="flex-shrink-0 w-[320px] sm:w-[380px] md:w-[420px] bg-gradient-to-br from-gray-900/90 to-gray-800/80 rounded-2xl overflow-hidden border border-gray-700/50 backdrop-blur-md shadow-xl group"
                     style={{
-                      willChange: 'transform',
                       transform: 'translateZ(0)',
+                      backfaceVisibility: 'hidden',
+                      WebkitBackfaceVisibility: 'hidden',
                     }}
                   >
                     <div className="relative h-48 sm:h-52 md:h-56 overflow-hidden">
@@ -189,6 +189,11 @@ const Projects = () => {
                         alt={project.title}
                         loading="lazy"
                         className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                        style={{
+                          transform: 'translateZ(0)',
+                          backfaceVisibility: 'hidden',
+                          WebkitBackfaceVisibility: 'hidden',
+                        }}
                       />
                       <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
                         <button
@@ -221,7 +226,7 @@ const Projects = () => {
                         ))}
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>

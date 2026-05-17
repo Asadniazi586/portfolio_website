@@ -271,26 +271,6 @@
   #home .text-\[8px\] {
     font-size: 0.65rem !important;
   }
-
-  .projects-container {
-    scroll-behavior: smooth !important;
-    -webkit-overflow-scrolling: touch !important;
-  }
-  
-  .project-card {
-    transform: translateZ(0) !important;
-    -webkit-transform: translateZ(0) !important;
-    backface-visibility: hidden !important;
-    -webkit-backface-visibility: hidden !important;
-    perspective: 1000px !important;
-    -webkit-perspective: 1000px !important;
-  }
-  
-  .marquee-container,
-  .marquee-track {
-    will-change: transform !important;
-    transform: translateZ(0) !important;
-  }
 }
 
 /* ==================== TABLET DEVICES ==================== */
@@ -327,37 +307,30 @@
   }
 }
 
-/* ==================== PROJECTS CARD SMOOTH SCROLL ==================== */
+/* ==================== PROJECTS CARD SMOOTH SCROLL - FIXED BLUR ==================== */
 .project-card {
-  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-}
-
-.projects-scroll-container {
-  transition: transform 0.15s cubic-bezier(0.23, 1, 0.32, 1) !important;
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
   will-change: transform;
 }
 
-@media (max-width: 640px) {
-  .projects-scroll-container {
-    transition: transform 0.1s cubic-bezier(0.23, 1, 0.32, 1) !important;
-  }
-  
-  .project-card {
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-  }
+#projects .flex {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
 }
 
-#projects .flex {
-  scrollbar-width: none !important;
-  -ms-overflow-style: none !important;
-  -webkit-overflow-scrolling: touch !important;
+/* Fix for blurry images */
+.project-card img {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 #projects .flex::-webkit-scrollbar {
@@ -434,7 +407,6 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Fix for iOS momentum scrolling */
 body {
   -webkit-overflow-scrolling: touch;
 }
