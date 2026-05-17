@@ -1,3 +1,4 @@
+// Projects.jsx - Add mobile detection to optimize scroll handler
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
@@ -15,10 +16,12 @@ const Projects = () => {
   const stickyRef = useRef(null);
   const horizontalRef = useRef(null);
   const rafRef = useRef(null);
+  const lastProgressRef = useRef(0);
 
   const [translateX, setTranslateX] = useState(0);
   const [maxTranslate, setMaxTranslate] = useState(0);
   const [showTitle, setShowTitle] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
   const projects = [
     {
@@ -65,6 +68,16 @@ const Projects = () => {
     },
   ];
 
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   useEffect(() => {
     const calculate = () => {
       if (!horizontalRef.current) return;
@@ -94,22 +107,38 @@ const Projects = () => {
       if (scrollableHeight > 0) {
         let progress = -rect.top / scrollableHeight;
         progress = Math.max(0, Math.min(progress, 1));
-        setTranslateX(progress * maxTranslate);
         
-        if (progress > 0.05) {
-          setShowTitle(false);
-        } else {
-          setShowTitle(true);
+        // THROTTLE: Only update if progress changed significantly (prevents shaking)
+        if (Math.abs(progress - lastProgressRef.current) > 0.01) {
+          lastProgressRef.current = progress;
+          setTranslateX(progress * maxTranslate);
+          
+          if (progress > 0.05) {
+            setShowTitle(false);
+          } else {
+            setShowTitle(true);
+          }
         }
       }
     };
 
     const handleScroll = () => {
-      if (rafRef.current) return;
-      rafRef.current = requestAnimationFrame(() => {
-        update();
-        rafRef.current = null;
-      });
+      // On mobile, use a slower update rate to prevent shaking
+      if (isMobile) {
+        // Use setTimeout instead of requestAnimationFrame for mobile
+        if (rafRef.current) return;
+        rafRef.current = setTimeout(() => {
+          update();
+          rafRef.current = null;
+        }, 16); // ~60fps but smoother on mobile
+      } else {
+        // Desktop uses requestAnimationFrame
+        if (rafRef.current) return;
+        rafRef.current = requestAnimationFrame(() => {
+          update();
+          rafRef.current = null;
+        });
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -117,9 +146,15 @@ const Projects = () => {
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      if (rafRef.current) {
+        if (isMobile) {
+          clearTimeout(rafRef.current);
+        } else {
+          cancelAnimationFrame(rafRef.current);
+        }
+      }
     };
-  }, [maxTranslate]);
+  }, [maxTranslate, isMobile]);
 
   const handleLinkClick = (url) => {
     if (url && url !== '#') {
@@ -167,16 +202,16 @@ const Projects = () => {
                 className="flex gap-4 md:gap-5 lg:gap-6"
                 style={{
                   transform: `translate3d(-${translateX}px, 0, 0)`,
-                  transition: 'transform 0.08s linear',
+                  transition: isMobile ? 'transform 0.05s linear' : 'transform 0.08s linear',
                   paddingLeft: '12px',
                   paddingRight: 'calc(100% - 280px)',
-                  willChange: 'transform',
+                  willChange: isMobile ? 'auto' : 'transform',
                 }}
               >
                 {projects.map((project, index) => (
                   <div
                     key={index}
-                    className="flex-shrink-0 w-[320px] sm:w-[380px] md:w-[420px] bg-gradient-to-br from-gray-900/90 to-gray-800/80 rounded-2xl overflow-hidden border border-gray-700/50 backdrop-blur-md shadow-xl group"
+                    className="flex-shrink-0 w-[320px] sm:w-[380px] md:w-[420px] bg-gradient-to-br from-gray-900/90 to-gray-800/80 rounded-2xl overflow-hidden border border-gray-700/50 shadow-xl group"
                     style={{
                       transform: 'translateZ(0)',
                       backfaceVisibility: 'hidden',
