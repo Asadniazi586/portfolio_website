@@ -63,8 +63,9 @@ const Hero = () => {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
+          className="flex flex-col items-center justify-center w-full"
         >
-          {/* AVAILABLE */}
+          {/* AVAILABLE - Centered */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
@@ -77,76 +78,89 @@ const Hero = () => {
             </span>
           </motion.div>
 
-          {/* NAME */}
+          {/* NAME - Centered */}
           <motion.h1
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.5, type: "spring", stiffness: 180 }}
-            className="text-[2.8rem] sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-5 tracking-tight"
+            className="text-[2.8rem] sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-5 tracking-tight text-center w-full"
           >
             M. ASAD KHAN
           </motion.h1>
 
-          {/* I BUILD - FIXED POSITION WITH SLOW 3D FLIP */}
-          <div className="flex justify-center items-center mb-5 sm:mb-6 px-2">
-            <div className="flex justify-center items-center flex-wrap sm:flex-nowrap gap-2">
-              {/* Fixed "I build" text - never changes position */}
-              <span className="whitespace-nowrap text-xl sm:text-xl md:text-3xl font-semibold text-gray-300">
+          {/* I BUILD - Centered on both mobile and desktop */}
+          <div className="flex justify-center items-center mb-5 sm:mb-6 w-full">
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-2">
+              {/* Fixed "I build" text */}
+              <span className="whitespace-nowrap text-xl sm:text-xl md:text-3xl font-semibold text-gray-300 text-center">
                 I build
               </span>
 
-              {/* Animated text container with slow 3D flip */}
+              {/* Animated text container with mobile left margin */}
               <div
-                className="relative inline-block"
+                className="relative inline-block sm:ml-0"
                 style={{ 
                   minWidth: '320px',
-                  width: 'auto'
+                  width: 'auto',
+                  marginLeft: '0px'
                 }}
               >
-                <AnimatePresence mode="wait">
-                  <motion.span
-                    key={currentRole}
-                    variants={flipVariants}
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    className="absolute left-0 font-extrabold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent text-xl sm:text-xl md:text-3xl whitespace-nowrap"
-                    style={{ 
-                      transformStyle: 'preserve-3d',
-                      backfaceVisibility: 'hidden',
-                      WebkitBackfaceVisibility: 'hidden'
-                    }}
-                  >
-                    {roles[currentRole]}
-                  </motion.span>
-                </AnimatePresence>
+                {/* Mobile-specific left margin using media query inline style */}
+                <style>
+                  {`
+                    @media (max-width: 640px) {
+                      .animated-text-container {
+                        margin-left: 12px !important;
+                      }
+                    }
+                  `}
+                </style>
+                <div className="animated-text-container" style={{ position: 'relative', display: 'inline-block' }}>
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={currentRole}
+                      variants={flipVariants}
+                      initial="initial"
+                      animate="animate"
+                      exit="exit"
+                      className="absolute left-0 font-extrabold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent text-xl sm:text-xl md:text-3xl whitespace-nowrap text-center"
+                      style={{ 
+                        transformStyle: 'preserve-3d',
+                        backfaceVisibility: 'hidden',
+                        WebkitBackfaceVisibility: 'hidden'
+                      }}
+                    >
+                      {roles[currentRole]}
+                    </motion.span>
+                  </AnimatePresence>
 
-                {/* Invisible placeholder to maintain width */}
-                <span className="invisible font-extrabold whitespace-nowrap text-xl sm:text-xl md:text-3xl">
-                  {longestRole}
-                </span>
+                  {/* Invisible placeholder to maintain width */}
+                  <span className="invisible font-extrabold whitespace-nowrap text-xl sm:text-xl md:text-3xl">
+                    {longestRole}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* DESCRIPTION */}
+          {/* DESCRIPTION - Centered */}
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.8 }}
-            className="text-gray-300 text-[15px] sm:text-base md:text-lg max-w-sm sm:max-w-2xl mx-auto mb-7 sm:mb-8 leading-relaxed px-4"
+            className="text-gray-300 text-[15px] sm:text-base md:text-lg max-w-sm sm:max-w-2xl mx-auto mb-7 sm:mb-8 leading-relaxed px-4 text-center w-full"
           >
             Software engineer & creative developer passionate about pushing
             the boundaries of what's possible in the browser — from
             WebGL and shaders to micro-animations and interactive storytelling.
           </motion.p>
 
-          {/* BUTTONS */}
+          {/* BUTTONS - Centered */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="flex justify-center gap-4 sm:gap-4 mb-7 sm:mb-10 flex-wrap"
+            className="flex justify-center gap-4 sm:gap-4 mb-7 sm:mb-10 flex-wrap w-full"
           >
             <motion.a
               whileHover={{ scale: 1.05 }}
@@ -167,19 +181,19 @@ const Hero = () => {
             </motion.a>
           </motion.div>
 
-          {/* STATS */}
+          {/* STATS - Centered */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="flex justify-center items-start gap-12 sm:gap-12 md:gap-16 mb-0 sm:mb-0"
+            className="flex justify-center items-start gap-12 sm:gap-12 md:gap-16 mb-0 sm:mb-0 w-full"
           >
             {[
               { value: "10+", label: "PROJECTS" },
               { value: "2+", label: "YEARS" },
               { value: "100%", label: "SATISFACTION" }
             ].map((stat, i) => (
-              <div key={i}>
+              <div key={i} className="text-center">
                 <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
                   {stat.value}
                 </div>
