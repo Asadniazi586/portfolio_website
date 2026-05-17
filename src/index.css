@@ -130,7 +130,6 @@
 
 /* ==================== MOBILE DEVICES ==================== */
 @media (max-width: 640px) {
-  /* HERO SECTION ONLY - Text size changes */
   #home {
     min-height: 100vh !important;
     height: auto !important;
@@ -147,118 +146,82 @@
     padding-right: 1rem !important;
   }
 
-  /* AVAILABLE BADGE - BIGGER */
   #home .inline-flex {
     margin-bottom: 1rem !important;
-    padding: 0.5rem 1.2rem !important;
+    padding: 0.4rem 1rem !important;
   }
   
   #home .inline-flex span:last-child {
-    font-size: 1rem !important;
-  }
-  
-  #home .inline-flex span:first-child {
-    width: 10px !important;
-    height: 10px !important;
+    font-size: 0.8rem !important;
   }
 
-  /* NAME - BIGGER */
   #home h1 {
-    font-size: 3.2rem !important;
-    margin-bottom: 1rem !important;
+    font-size: 2.5rem !important;
+    margin-bottom: 0.85rem !important;
     letter-spacing: -0.02em !important;
   }
 
-  /* I BUILD TEXT - BIGGER */
   #home .text-xl {
-    font-size: 1.7rem !important;
+    font-size: 1.35rem !important;
+    margin-bottom: 0.85rem !important;
   }
   
   #home .whitespace-nowrap.text-xl {
-    font-size: 1.7rem !important;
+    font-size: 1.35rem !important;
   }
 
   #home .font-extrabold {
-    font-size: 1.7rem !important;
+    font-size: 1.35rem !important;
   }
 
   #home .relative.inline-block {
-    min-width: 380px !important;
+    min-width: 340px !important;
   }
 
-  /* DESCRIPTION - BIGGER */
   #home p {
-    font-size: 1.1rem !important;
-    margin-bottom: 1.5rem !important;
+    font-size: 0.95rem !important;
+    margin-bottom: 1.35rem !important;
     line-height: 1.5 !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
   }
 
-  /* BUTTONS - BIGGER */
   #home .flex.justify-center.gap-4 {
-    margin-bottom: 1.5rem !important;
-    gap: 1.2rem !important;
+    margin-bottom: 1.35rem !important;
+    gap: 1rem !important;
   }
   
   #home a.px-6 {
-    padding-left: 1.8rem !important;
-    padding-right: 1.8rem !important;
+    padding-left: 1.4rem !important;
+    padding-right: 1.4rem !important;
   }
   
   #home a.py-2\.5 {
-    padding-top: 0.85rem !important;
-    padding-bottom: 0.85rem !important;
+    padding-top: 0.7rem !important;
+    padding-bottom: 0.7rem !important;
   }
   
   #home a {
-    font-size: 1.1rem !important;
+    font-size: 0.95rem !important;
   }
 
-  /* STATS - BIGGER */
   #home .text-2xl {
-    font-size: 2rem !important;
+    font-size: 1.7rem !important;
   }
   
   #home .gap-12 {
-    gap: 2.5rem !important;
+    gap: 2rem !important;
   }
   
   #home .text-\[10px\] {
-    font-size: 0.85rem !important;
-    margin-top: 0.4rem !important;
-  }
-
-  /* MARQUEE in Hero - BIGGER (only affects marquee inside hero) */
-  #home .marquee-track {
-    animation: marquee 35s linear infinite !important;
-  }
-  
-  #home .marquee-track span {
-    font-size: 1rem !important;
-    margin-left: 1rem !important;
-    margin-right: 1rem !important;
-  }
-
-  #home .marquee-container {
-    padding-top: 0.9rem !important;
-    padding-bottom: 0.9rem !important;
-  }
-  
-  /* SCROLL INDICATOR - BIGGER */
-  #home .flex.flex-col.items-center.justify-center.py-2\.5 {
-    padding-top: 0.9rem !important;
-    padding-bottom: 0.9rem !important;
-  }
-  
-  #home .w-6.h-9 {
-    width: 1.8rem !important;
-    height: 2.6rem !important;
-  }
-  
-  #home .text-\[8px\] {
     font-size: 0.75rem !important;
+    margin-top: 0.3rem !important;
   }
 
-  /* ABOUT SECTION - Keep as is, no changes */
+  #home .flex.justify-center.items-start.gap-12 {
+    margin-bottom: 0.5rem !important;
+  }
+
   #about {
     margin-top: 0 !important;
     padding-top: 3rem !important;
@@ -267,7 +230,6 @@
     background: black !important;
   }
 
-  /* Global container padding */
   .container {
     padding-left: 1rem !important;
     padding-right: 1rem !important;
@@ -277,36 +239,62 @@
     overflow-x: hidden;
   }
   
-  /* Fix for marquee track to prevent collapsing */
   .marquee-track {
-    display: inline-flex !important;
-    white-space: nowrap !important;
-    width: auto !important;
+    animation: marquee 35s linear infinite !important;
+  }
+  
+  .marquee-track span {
+    font-size: 0.85rem !important;
+    margin-left: 0.85rem !important;
+    margin-right: 0.85rem !important;
   }
   
   .h-4 {
     height: 0.75rem !important;
   }
 
+  .marquee-container {
+    padding-top: 0.7rem !important;
+    padding-bottom: 0.7rem !important;
+  }
+  
+  #home .flex.flex-col.items-center.justify-center.py-2\.5 {
+    padding-top: 0.7rem !important;
+    padding-bottom: 0.7rem !important;
+  }
+  
+  #home .w-6.h-9 {
+    width: 1.6rem !important;
+    height: 2.4rem !important;
+  }
+  
+  #home .text-\[8px\] {
+    font-size: 0.65rem !important;
+  }
+
   /* ==================== FIX FOR MOBILE PROJECTS CARDS ==================== */
-  /* THESE REMAIN EXACTLY AS THEY WERE - NO CHANGES */
+  /* Remove backdrop-filter on mobile - this causes the blurring/shattering */
   #projects .bg-gradient-to-br {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
+    /* Keep the gradient background */
     background: linear-gradient(to bottom right, rgba(17, 24, 39, 0.95), rgba(31, 41, 55, 0.95)) !important;
   }
   
+  /* Optimize transforms for mobile */
   #projects .flex {
     transition: transform 0.15s ease-out !important;
     will-change: auto !important;
   }
   
+  /* Force GPU acceleration properly */
   #projects .flex-shrink-0,
   #projects img {
     transform: translate3d(0, 0, 0) !important;
     -webkit-transform: translate3d(0, 0, 0) !important;
   }
   
+  /* Prevent image blur during scroll */
   #projects img {
     image-rendering: auto !important;
   }
