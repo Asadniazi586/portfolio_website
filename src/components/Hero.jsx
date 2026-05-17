@@ -236,7 +236,7 @@ const Hero = () => {
       </div>
 
       {/* MOBILE MARQUEE */}
-      <div className="absolute -bottom-2 left-0 right-0 md:hidden">
+      <div className="absolute bottom-0 left-0 right-0 md:hidden">
         <div className="h-4 bg-transparent"></div>
         
         <div className="marquee-container overflow-hidden border-t border-gray-800 bg-black/60 backdrop-blur-sm py-4">
