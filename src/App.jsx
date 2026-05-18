@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { MotionConfig } from 'framer-motion';
 import Lenis from 'lenis';
 
 import Navbar from './components/Navbar';
@@ -15,19 +14,8 @@ import WhatsAppWidget from './components/WhatsAppWidget';
 import Testimonials from './components/Testimonials';
 import HowIWork from './components/HowIWork';
 
-// Should be exactly this:
-import { isLowEndDevice } from "./utils/performance";
-import "./styles/performance.css";
-
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-
-  // Add low-end device detection
-  useEffect(() => {
-    if (isLowEndDevice()) {
-      document.body.classList.add('low-end-device');
-    }
-  }, []);
 
   useEffect(() => {
     // ✅ LENIS INIT (smooth scroll engine)
@@ -56,7 +44,7 @@ function App() {
   };
 
   return (
-    <MotionConfig reducedMotion="user">
+    <>
       <LoadingScreen onLoadingComplete={handleLoadingComplete} />
 
       {!isLoading && (
@@ -78,7 +66,7 @@ function App() {
           </div>
         </div>
       )}
-    </MotionConfig>
+    </>
   );
 }
 
