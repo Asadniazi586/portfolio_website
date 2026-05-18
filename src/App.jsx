@@ -16,7 +16,7 @@ import Testimonials from './components/Testimonials';
 import HowIWork from './components/HowIWork';
 
 // Import performance utilities
-import { isLowEndDevice } from './utils/performance';
+import { isLowEndDevice } from './utils/performance.js';
 import './styles/performance.css';
 
 function App() {
