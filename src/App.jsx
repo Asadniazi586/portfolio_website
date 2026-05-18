@@ -15,9 +15,9 @@ import WhatsAppWidget from './components/WhatsAppWidget';
 import Testimonials from './components/Testimonials';
 import HowIWork from './components/HowIWork';
 
-// Import performance utilities
-import { isLowEndDevice } from './utils/performance.js';
-import './styles/performance.css';
+// Should be exactly this:
+import { isLowEndDevice } from "./utils/performance";
+import "./styles/performance.css";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
