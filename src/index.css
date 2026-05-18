@@ -518,3 +518,60 @@ body {
     will-change: transform;
   }
 }
+/* Add to the end of your src/index.css */
+
+/* Performance optimizations */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* GPU acceleration for all animated elements */
+.motion-div,
+.group,
+[class*="animate-"] {
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+/* Optimize scroll performance */
+#projects .flex {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Reduce backdrop-filter intensity on mobile for better performance */
+@media (max-width: 768px) {
+  .backdrop-blur-sm,
+  .backdrop-blur-md,
+  .backdrop-blur-xl,
+  .backdrop-blur-2xl {
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+  }
+  
+  /* Keep animations but make them smoother */
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  /* Optimize hover effects for touch devices */
+  .hover\:scale-110:hover {
+    transform: scale(1.05);
+  }
+}
+
+/* Low-end device optimizations */
+.low-end-device .backdrop-blur-sm,
+.low-end-device .backdrop-blur-md,
+.low-end-device .backdrop-blur-xl {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.low-end-device .animate-pulse {
+  animation: none !important;
+}
+
+.low-end-device .group-hover\:scale-110:hover {
+  transform: none !important;
+}
