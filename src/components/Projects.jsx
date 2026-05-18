@@ -1,4 +1,4 @@
-// Projects.jsx - Add mobile detection to optimize scroll handler
+// Projects.jsx - Title always visible on mobile
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
@@ -108,12 +108,12 @@ const Projects = () => {
         let progress = -rect.top / scrollableHeight;
         progress = Math.max(0, Math.min(progress, 1));
         
-        // THROTTLE: Only update if progress changed significantly (prevents shaking)
         if (Math.abs(progress - lastProgressRef.current) > 0.01) {
           lastProgressRef.current = progress;
           setTranslateX(progress * maxTranslate);
           
-          if (progress > 0.05) {
+          // Title only hides on DESKTOP when scrolling - NEVER hide on mobile
+          if (!isMobile && progress > 0.05) {
             setShowTitle(false);
           } else {
             setShowTitle(true);
@@ -123,16 +123,13 @@ const Projects = () => {
     };
 
     const handleScroll = () => {
-      // On mobile, use a slower update rate to prevent shaking
       if (isMobile) {
-        // Use setTimeout instead of requestAnimationFrame for mobile
         if (rafRef.current) return;
         rafRef.current = setTimeout(() => {
           update();
           rafRef.current = null;
-        }, 16); // ~60fps but smoother on mobile
+        }, 16);
       } else {
-        // Desktop uses requestAnimationFrame
         if (rafRef.current) return;
         rafRef.current = requestAnimationFrame(() => {
           update();
@@ -177,22 +174,37 @@ const Projects = () => {
         <div className="flex-1 flex flex-col justify-center">
           <div className="w-full px-4 sm:px-6 md:px-8 lg:px-10">
             
+            {/* Title Section - Always visible on mobile, hides on desktop when scrolling */}
             <motion.div
               ref={ref}
               initial={{ opacity: 1, y: 0 }}
               animate={{ 
-                opacity: showTitle ? 1 : 0,
-                y: showTitle ? 0 : -20
+                opacity: showTitle ? 1 : 1,  // Always full opacity on all devices
+                y: showTitle ? 0 : 0         // Always stay in place
               }}
               transition={{ duration: 0.4 }}
               className="text-center mb-6 md:mb-8"
             >
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3">
-                Featured Projects
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={inView ? { scale: 1 } : {}}
+                transition={{ duration: 0.5, type: "spring" }}
+                className="inline-block mb-4"
+              >
+                <span className="px-4 py-2 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 text-blue-400 text-sm font-semibold">
+                  My Portfolio
+                </span>
+              </motion.div>
+
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4">
+                Featured{' '}
+                <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+                  Projects
+                </span>
               </h2>
-              <div className="w-16 md:w-20 h-[2px] rounded-full mx-auto mb-3 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
+              <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto rounded-full mb-5" />
               <p className="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed px-4">
-                A collection of selected projects showcasing my expertise in modern web development
+                A curated selection of recent work spanning interactive experiences and modern web applications
               </p>
             </motion.div>
 
@@ -211,54 +223,59 @@ const Projects = () => {
                 {projects.map((project, index) => (
                   <div
                     key={index}
-                    className="flex-shrink-0 w-[320px] sm:w-[380px] md:w-[420px] bg-gradient-to-br from-gray-900/90 to-gray-800/80 rounded-2xl overflow-hidden border border-gray-700/50 shadow-xl group"
-                    style={{
-                      transform: 'translateZ(0)',
-                      backfaceVisibility: 'hidden',
-                      WebkitBackfaceVisibility: 'hidden',
-                    }}
+                    className="group relative flex-shrink-0 w-[320px] sm:w-[380px] md:w-[420px]"
                   >
-                    <div className="relative h-48 sm:h-52 md:h-56 overflow-hidden">
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        loading="lazy"
-                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                        style={{
-                          transform: 'translateZ(0)',
-                          backfaceVisibility: 'hidden',
-                          WebkitBackfaceVisibility: 'hidden',
-                        }}
-                      />
-                      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
-                        <button
-                          onClick={() => handleLinkClick(project.liveLink)}
-                          className="p-3 rounded-full bg-blue-600 hover:bg-blue-700 transition-all duration-300 active:scale-95 md:hover:scale-110"
-                          aria-label="Live Demo"
-                        >
-                          <FiExternalLink className="text-white w-5 h-5" />
-                        </button>
-                      </div>
-                      <div className="absolute bottom-2 right-2 bg-blue-600/80 rounded-full p-1.5 opacity-100 md:opacity-0 transition-opacity">
-                        <FiExternalLink className="text-white w-3 h-3" />
-                      </div>
-                    </div>
-                    <div className="p-4 md:p-5">
-                      <h3 className="text-base md:text-lg font-bold mb-2 text-white group-hover:text-blue-400 transition-colors duration-300">
-                        {project.title}
-                      </h3>
-                      <p className="text-gray-400 text-xs md:text-sm leading-relaxed mb-3 line-clamp-2">
-                        {project.description}
-                      </p>
-                      <div className="flex flex-wrap gap-1.5">
-                        {project.tech.map((tech, i) => (
-                          <span
-                            key={i}
-                            className="px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[9px] md:text-[10px] font-medium"
+                    {/* Glowing border effect on hover */}
+                    <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-all duration-500 blur-xl" />
+                    <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-40 transition-all duration-500" />
+                    
+                    {/* Card content */}
+                    <div className="relative h-full bg-gradient-to-br from-gray-900/90 to-gray-800/80 rounded-2xl overflow-hidden border border-gray-700/50 shadow-xl group-hover:border-transparent transition-all duration-500">
+                      {/* Card shine effect */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none" />
+                      
+                      <div className="relative h-48 sm:h-52 md:h-56 overflow-hidden">
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          loading="lazy"
+                          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                          style={{
+                            transform: 'translateZ(0)',
+                            backfaceVisibility: 'hidden',
+                            WebkitBackfaceVisibility: 'hidden',
+                          }}
+                        />
+                        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
+                          <button
+                            onClick={() => handleLinkClick(project.liveLink)}
+                            className="p-3 rounded-full bg-blue-600 hover:bg-blue-700 transition-all duration-300 active:scale-95 md:hover:scale-110"
+                            aria-label="Live Demo"
                           >
-                            {tech}
-                          </span>
-                        ))}
+                            <FiExternalLink className="text-white w-5 h-5" />
+                          </button>
+                        </div>
+                        <div className="absolute bottom-2 right-2 bg-blue-600/80 rounded-full p-1.5 opacity-100 md:opacity-0 transition-opacity">
+                          <FiExternalLink className="text-white w-3 h-3" />
+                        </div>
+                      </div>
+                      <div className="p-4 md:p-5">
+                        <h3 className="text-base md:text-lg font-bold mb-2 text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-400 group-hover:to-purple-400 group-hover:bg-clip-text transition-all duration-300">
+                          {project.title}
+                        </h3>
+                        <p className="text-gray-400 text-xs md:text-sm leading-relaxed mb-3 line-clamp-2">
+                          {project.description}
+                        </p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {project.tech.map((tech, i) => (
+                            <span
+                              key={i}
+                              className="px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[9px] md:text-[10px] font-medium"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>

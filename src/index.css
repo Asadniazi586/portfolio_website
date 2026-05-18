@@ -437,3 +437,84 @@ html {
 body {
   -webkit-overflow-scrolling: touch;
 }
+
+/* ==================== PREMIUM SKILLS SECTION ==================== */
+
+#skills .group {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
+}
+
+#skills .group::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.4),
+    rgba(168, 85, 247, 0.4),
+    rgba(236, 72, 153, 0.4)
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+#skills .group:hover {
+  transform: translateY(-6px);
+}
+
+@media (max-width: 768px) {
+
+  #skills .group:hover {
+    transform: none;
+  }
+
+  #skills .blur-xl,
+  #skills .blur-3xl {
+    filter: blur(40px);
+  }
+}
+
+/* ==================== PREMIUM TECHNICAL PROFICIENCY ==================== */
+
+#skills .group {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+#skills .group:hover {
+  box-shadow:
+    0 0 25px rgba(59, 130, 246, 0.12),
+    0 0 45px rgba(168, 85, 247, 0.08);
+}
+
+#skills .group .animate-pulse {
+  animation-duration: 2s;
+}
+
+@media (max-width: 768px) {
+
+  #skills .group:hover {
+    transform: none;
+  }
+
+  #skills .blur-xl {
+    filter: blur(35px);
+  }
+
+  #skills .group {
+    will-change: transform;
+  }
+}
