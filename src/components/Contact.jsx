@@ -24,17 +24,83 @@ const Contact = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Mobile functions for phone and email
+  const handlePhoneClick = () => {
+    window.location.href = 'tel:+923419443586';
+  };
+
+  const handleEmailClick = () => {
+    window.location.href = 'mailto:asadniazi712@gmail.com';
+  };
+
   const contactInfo = [
-    { icon: FiMapPin, title: 'Location', details: 'Faisalabad, Pakistan', color: 'from-blue-500 to-cyan-400', bgColor: 'bg-blue-500/10', borderColor: 'border-blue-500/20' },
-    { icon: FiPhone, title: 'Phone', details: '+92-3419443586', color: 'from-purple-500 to-pink-500', bgColor: 'bg-purple-500/10', borderColor: 'border-purple-500/20' },
-    { icon: FiMail, title: 'Email', details: 'asadniazi712@gmail.com', color: 'from-emerald-500 to-teal-500', bgColor: 'bg-emerald-500/10', borderColor: 'border-emerald-500/20' },
+    { 
+      icon: FiMapPin, 
+      title: 'Location', 
+      details: 'Faisalabad, Pakistan', 
+      color: 'from-blue-500 to-cyan-400', 
+      bgColor: 'bg-blue-500/10', 
+      borderColor: 'border-blue-500/20',
+      onClick: null,
+      isClickable: false
+    },
+    { 
+      icon: FiPhone, 
+      title: 'Phone', 
+      details: '+92-3419443586', 
+      color: 'from-purple-500 to-pink-500', 
+      bgColor: 'bg-purple-500/10', 
+      borderColor: 'border-purple-500/20',
+      onClick: handlePhoneClick,
+      isClickable: true
+    },
+    { 
+      icon: FiMail, 
+      title: 'Email', 
+      details: 'asadniazi712@gmail.com', 
+      color: 'from-emerald-500 to-teal-500', 
+      bgColor: 'bg-emerald-500/10', 
+      borderColor: 'border-emerald-500/20',
+      onClick: handleEmailClick,
+      isClickable: true
+    },
   ];
 
   const socialLinks = [
-    { icon: FiGithub, name: 'GitHub', url: 'https://github.com', color: 'from-gray-500 to-gray-700' },
-    { icon: FiLinkedin, name: 'LinkedIn', url: 'https://linkedin.com', color: 'from-blue-600 to-blue-800' },
+    { icon: FiGithub, name: 'GitHub', url: 'https://github.com/Asadniazi586', color: 'from-gray-500 to-gray-700' },
+    { icon: FiLinkedin, name: 'LinkedIn', url: 'https://www.linkedin.com/in/asad-niazi-215a95271', color: 'from-blue-600 to-blue-800' },
     { icon: FiTwitter, name: 'Twitter', url: 'https://twitter.com', color: 'from-sky-500 to-sky-700' },
   ];
+
+  // Container animation for smooth card entrance
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, x: -30 },
+    visible: { 
+      opacity: 1, 
+      x: 0,
+      transition: { duration: 0.4, ease: "easeOut" }
+    },
+  };
+
+  const socialVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: { 
+      opacity: 1, 
+      scale: 1,
+      transition: { duration: 0.3, ease: "easeOut" }
+    },
+  };
 
   return (
     <section id="contact" className="relative py-20 md:py-28 bg-black overflow-hidden">
@@ -84,9 +150,9 @@ const Contact = () => {
         <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-start">
           {/* LEFT - Contact Information */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            variants={containerVariants}
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
             className="space-y-6"
           >
             <div>
@@ -99,16 +165,15 @@ const Contact = () => {
               <div className="w-16 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mt-3" />
             </div>
 
-            {/* Contact Cards */}
-            <div className="space-y-4">
+            {/* Contact Cards - Smooth entrance one by one */}
+            <motion.div variants={containerVariants} className="space-y-4">
               {contactInfo.map((info, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={inView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ delay: 0.3 + index * 0.1 }}
+                  variants={cardVariants}
                   whileHover={{ x: 8 }}
-                  className={`group relative overflow-hidden rounded-2xl ${info.bgColor} border ${info.borderColor} p-5 backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:border-opacity-100`}
+                  onClick={info.onClick}
+                  className={`group relative overflow-hidden rounded-2xl ${info.bgColor} border ${info.borderColor} p-5 backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:border-opacity-100 ${info.isClickable ? 'cursor-pointer' : ''}`}
                   style={{ background: 'rgba(17, 24, 39, 0.6)' }}
                 >
                   <div className="flex items-center gap-4">
@@ -122,13 +187,11 @@ const Contact = () => {
                   </div>
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
 
-            {/* Social Connect Section - Replaces Working Hours */}
+            {/* Social Connect Section */}
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={inView ? { opacity: 1 } : {}}
-              transition={{ delay: 0.6 }}
+              variants={cardVariants}
               whileHover={{ y: -5 }}
               className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-900/90 to-gray-800/90 border border-gray-700/50 p-6 backdrop-blur-sm"
             >
@@ -149,8 +212,9 @@ const Contact = () => {
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      initial={{ opacity: 0, scale: 0 }}
-                      animate={inView ? { opacity: 1, scale: 1 } : {}}
+                      variants={socialVariants}
+                      initial="hidden"
+                      animate={inView ? "visible" : "hidden"}
                       transition={{ delay: 0.7 + index * 0.1 }}
                       whileHover={{ y: -3, scale: 1.05 }}
                       className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-gradient-to-r ${social.color} bg-opacity-10 hover:shadow-lg transition-all duration-300`}
@@ -163,7 +227,6 @@ const Contact = () => {
                 </div>
               </div>
             </motion.div>
-
           </motion.div>
 
           {/* RIGHT - Contact Form */}
@@ -229,7 +292,6 @@ const Contact = () => {
                   disabled={isSubmitting}
                   className="relative w-full py-3.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl font-semibold text-white flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-blue-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden group"
                 >
-                  {/* Button Shine Effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
                   
                   {isSent ? (
