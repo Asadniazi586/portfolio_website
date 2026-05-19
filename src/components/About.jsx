@@ -1,4 +1,4 @@
-// ABOUT.jsx - Smooth synchronized animations
+// ABOUT.jsx - 100% Smooth Mobile Animation using CSS
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FiCode, FiZap, FiUsers, FiAward, FiHeart, FiGlobe } from 'react-icons/fi';
@@ -7,6 +7,7 @@ import asad from '../assets/asadpic.png';
 const About = () => {
   const sectionRef = useRef(null);
   const [hasAnimated, setHasAnimated] = useState(false);
+  const [cardsVisible, setCardsVisible] = useState(false);
   
   // State for counting animation
   const [experienceCount, setExperienceCount] = useState(0);
@@ -19,6 +20,8 @@ const About = () => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && !hasAnimated) {
             setHasAnimated(true);
+            // Small delay to trigger card animation
+            setTimeout(() => setCardsVisible(true), 100);
             
             let exp = 0;
             const expInterval = setInterval(() => {
@@ -81,8 +84,7 @@ const About = () => {
       desc: 'Writing maintainable and scalable code with best practices',
       color: 'from-blue-500 to-cyan-400',
       bgColor: 'bg-blue-500/10',
-      borderColor: 'border-blue-500/20',
-      direction: -20
+      borderColor: 'border-blue-500/20'
     },
     {
       icon: FiZap,
@@ -90,8 +92,7 @@ const About = () => {
       desc: 'Optimized for speed and efficiency with modern tools',
       color: 'from-purple-500 to-pink-500',
       bgColor: 'bg-purple-500/10',
-      borderColor: 'border-purple-500/20',
-      direction: 0
+      borderColor: 'border-purple-500/20'
     },
     {
       icon: FiUsers,
@@ -99,44 +100,9 @@ const About = () => {
       desc: 'Excellent collaboration skills and agile methodology',
       color: 'from-emerald-500 to-teal-500',
       bgColor: 'bg-emerald-500/10',
-      borderColor: 'border-emerald-500/20',
-      direction: 20
+      borderColor: 'border-emerald-500/20'
     },
   ];
-
-  // Container animation for all left side content
-  const leftContainerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2,
-        duration: 0.5
-      }
-    }
-  };
-
-  const leftItemVariants = {
-    hidden: { opacity: 0, x: -30 },
-    visible: { 
-      opacity: 1, 
-      x: 0,
-      transition: { duration: 0.5, ease: "easeOut" }
-    }
-  };
-
-  const cardVariants = {
-    hidden: (custom) => ({ 
-      opacity: 0, 
-      x: custom 
-    }),
-    visible: { 
-      opacity: 1, 
-      x: 0,
-      transition: { duration: 0.5, ease: "easeOut" }
-    }
-  };
 
   return (
     <section 
@@ -195,16 +161,15 @@ const About = () => {
 
         {/* CONTENT */}
         <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
-          {/* LEFT - Text Content with synchronized animations */}
+          {/* LEFT - Text Content */}
           <motion.div
-            variants={leftContainerVariants}
-            initial="hidden"
-            whileInView="visible"
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className="space-y-6"
           >
-            {/* Who Am I Section */}
-            <motion.div variants={leftItemVariants}>
+            <div>
               <h3 className="text-3xl md:text-4xl font-bold mb-4 text-white">
                 Who Am{' '}
                 <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
@@ -227,23 +192,23 @@ const About = () => {
                 amazing digital experiences every day. I believe in writing
                 clean, maintainable code that makes a difference.
               </p>
-            </motion.div>
+            </div>
 
-            {/* FEATURES Cards - Animate together with Who Am I */}
-            <motion.div 
-              variants={leftItemVariants}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-4"
-            >
+            {/* FEATURES - CSS-based animations for 100% smooth mobile performance */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-4">
               {features.map((feature, index) => (
-                <motion.div
+                <div
                   key={index}
-                  custom={feature.direction}
-                  variants={cardVariants}
-                  className={`group relative overflow-hidden rounded-2xl ${feature.bgColor} border ${feature.borderColor} p-4 transition-all duration-200 hover:shadow-lg`}
-                  style={{ background: 'rgba(17, 24, 39, 0.8)' }}
+                  className={`group relative overflow-hidden rounded-2xl ${feature.bgColor} border ${feature.borderColor} p-4 transition-all duration-300 hover:shadow-lg card-animate`}
+                  style={{ 
+                    background: 'rgba(17, 24, 39, 0.8)',
+                    animation: cardsVisible ? `slideInLeft ${0.3 + index * 0.1}s ease-out forwards` : 'none',
+                    opacity: 0,
+                    transform: index === 0 ? 'translateX(-30px)' : index === 1 ? 'translateY(30px)' : 'translateX(30px)'
+                  }}
                 >
                   {/* Glow Effect */}
-                  <div className={`absolute inset-0 bg-gradient-to-r ${feature.color} opacity-0 group-hover:opacity-10 transition-opacity duration-200`} />
+                  <div className={`absolute inset-0 bg-gradient-to-r ${feature.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
 
                   <div className="relative z-10 text-center">
                     <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center mx-auto mb-3 shadow-lg`}>
@@ -258,15 +223,12 @@ const About = () => {
                       {feature.desc}
                     </p>
                   </div>
-                </motion.div>
+                </div>
               ))}
-            </motion.div>
+            </div>
 
             {/* Stats Section with Animated Counting */}
-            <motion.div 
-              variants={leftItemVariants}
-              className="grid grid-cols-3 gap-4 pt-6 border-t border-gray-800"
-            >
+            <div className="grid grid-cols-3 gap-4 pt-6 border-t border-gray-800">
               {/* Years Experience */}
               <div className="text-center group">
                 <FiAward className="w-6 h-6 text-blue-400 mx-auto mb-2 transition-transform duration-300 group-hover:scale-110" />
@@ -293,7 +255,7 @@ const About = () => {
                 </div>
                 <div className="text-gray-500 text-xs md:text-sm">Happy Clients</div>
               </div>
-            </motion.div>
+            </div>
           </motion.div>
 
           {/* RIGHT - Image with Enhanced Effects */}
@@ -301,7 +263,7 @@ const About = () => {
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
             className="relative"
           >
             {/* Animated Border */}
@@ -328,7 +290,7 @@ const About = () => {
                 initial={{ y: 20, opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: 0.6, duration: 0.5 }}
+                transition={{ delay: 0.8, duration: 0.5 }}
                 className="absolute bottom-6 left-6 right-6 bg-black/60 backdrop-blur-md rounded-xl p-3 border border-white/10"
               >
                 <div className="flex items-center justify-between">
@@ -347,6 +309,48 @@ const About = () => {
           </motion.div>
         </div>
       </div>
+
+      {/* CSS Animation Keyframes - 100% smooth on mobile */}
+      <style>{`
+        @keyframes slideInLeft {
+          0% {
+            opacity: 0;
+            transform: translateX(-30px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        
+        @keyframes slideInRight {
+          0% {
+            opacity: 0;
+            transform: translateX(30px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        
+        @keyframes fadeInUp {
+          0% {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .card-animate {
+          will-change: transform, opacity;
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
+        }
+      `}</style>
     </section>
   );
 };
