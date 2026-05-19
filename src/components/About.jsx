@@ -20,7 +20,6 @@ const About = () => {
           if (entry.isIntersecting && !hasAnimated) {
             setHasAnimated(true);
             
-            // Animate experience from 0 to 3 - SLOWER
             let exp = 0;
             const expInterval = setInterval(() => {
               if (exp < 3) {
@@ -29,33 +28,30 @@ const About = () => {
               } else {
                 clearInterval(expInterval);
               }
-            }, 200); // Changed from 150 to 200 (slower)
+            }, 200);
 
-            // Animate projects from 0 to 50 - SLOWER
             let proj = 0;
             const projInterval = setInterval(() => {
               if (proj < 50) {
-                proj = proj + 1; // Changed from +2 to +1 (slower)
+                proj = proj + 1;
                 if (proj > 50) proj = 50;
                 setProjectsCount(proj);
               } else {
                 clearInterval(projInterval);
               }
-            }, 40); // Changed from 30 to 40 (slower)
+            }, 40);
 
-            // Animate clients from 0 to 100 - SLOWER
             let cli = 0;
             const cliInterval = setInterval(() => {
               if (cli < 100) {
-                cli = cli + 2; // Changed from +3 to +2 (slower)
+                cli = cli + 2;
                 if (cli > 100) cli = 100;
                 setClientsCount(cli);
               } else {
                 clearInterval(cliInterval);
               }
-            }, 35); // Changed from 25 to 35 (slower)
+            }, 35);
 
-            // Cleanup intervals when done
             setTimeout(() => {
               clearInterval(expInterval);
               clearInterval(projInterval);
@@ -195,25 +191,27 @@ const About = () => {
               </p>
             </div>
 
-            {/* FEATURES - Enhanced Cards */}
+            {/* FEATURES - Smooth animation on mobile */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-4">
               {features.map((feature, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 + index * 0.1 }}
-                  whileHover={{ y: -5, scale: 1.02 }}
-                  className={`group relative overflow-hidden rounded-2xl ${feature.bgColor} border ${feature.borderColor} p-4 backdrop-blur-sm transition-all duration-300 hover:shadow-lg`}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ 
+                    delay: 0.2 + index * 0.1,
+                    duration: 0.4,
+                    ease: "easeOut"
+                  }}
+                  whileHover={{ y: -5 }}
+                  className={`group relative overflow-hidden rounded-2xl ${feature.bgColor} border ${feature.borderColor} p-4 transition-all duration-300 hover:shadow-lg`}
                   style={{ background: 'rgba(17, 24, 39, 0.8)' }}
                 >
-                  {/* Glow Effect */}
-                  <div className={`absolute inset-0 bg-gradient-to-r ${feature.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+                  {/* Glow Effect - smoother */}
+                  <div className={`absolute inset-0 bg-gradient-to-r ${feature.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
                   
-                  {/* Shine Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-
+                  {/* Simple shine effect - removed complex transform for mobile smoothness */}
                   <div className="relative z-10 text-center">
                     <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center mx-auto mb-3 shadow-lg`}>
                       <feature.icon className="w-5 h-5 text-white" />
@@ -231,11 +229,11 @@ const About = () => {
               ))}
             </div>
 
-            {/* Stats Section with Animated Counting - SLOWER */}
+            {/* Stats Section with Animated Counting */}
             <div className="grid grid-cols-3 gap-4 pt-6 border-t border-gray-800">
               {/* Years Experience */}
               <div className="text-center group">
-                <FiAward className="w-6 h-6 text-blue-400 mx-auto mb-2 group-hover:scale-110 transition-transform duration-300" />
+                <FiAward className="w-6 h-6 text-blue-400 mx-auto mb-2 transition-transform duration-300 group-hover:scale-110" />
                 <div className="text-xl md:text-2xl font-bold text-white">
                   {experienceCount}+
                 </div>
@@ -244,7 +242,7 @@ const About = () => {
 
               {/* Projects Completed */}
               <div className="text-center group">
-                <FiHeart className="w-6 h-6 text-blue-400 mx-auto mb-2 group-hover:scale-110 transition-transform duration-300" />
+                <FiHeart className="w-6 h-6 text-blue-400 mx-auto mb-2 transition-transform duration-300 group-hover:scale-110" />
                 <div className="text-xl md:text-2xl font-bold text-white">
                   {projectsCount}+
                 </div>
@@ -253,7 +251,7 @@ const About = () => {
 
               {/* Happy Clients */}
               <div className="text-center group">
-                <FiGlobe className="w-6 h-6 text-blue-400 mx-auto mb-2 group-hover:scale-110 transition-transform duration-300" />
+                <FiGlobe className="w-6 h-6 text-blue-400 mx-auto mb-2 transition-transform duration-300 group-hover:scale-110" />
                 <div className="text-xl md:text-2xl font-bold text-white">
                   {clientsCount}+
                 </div>
@@ -279,21 +277,22 @@ const About = () => {
               <img
                 src={asad}
                 alt="Profile"
-                className="w-full h-auto transition-all duration-500 group-hover:scale-110"
+                className="w-full h-auto transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
               />
 
               {/* Gradient Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
               
-              {/* Hover Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-all duration-500" />
+              {/* Hover Overlay - simplified for mobile */}
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
               {/* Bottom Badge */}
               <motion.div
                 initial={{ y: 20, opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: 0.8 }}
+                transition={{ delay: 0.8, duration: 0.5 }}
                 className="absolute bottom-6 left-6 right-6 bg-black/60 backdrop-blur-md rounded-xl p-3 border border-white/10"
               >
                 <div className="flex items-center justify-between">
