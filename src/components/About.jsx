@@ -1,4 +1,4 @@
-// ABOUT.jsx
+// ABOUT.jsx - Smooth synchronized animations
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FiCode, FiZap, FiUsers, FiAward, FiHeart, FiGlobe } from 'react-icons/fi';
@@ -82,7 +82,7 @@ const About = () => {
       color: 'from-blue-500 to-cyan-400',
       bgColor: 'bg-blue-500/10',
       borderColor: 'border-blue-500/20',
-      direction: -30
+      direction: -20
     },
     {
       icon: FiZap,
@@ -100,9 +100,43 @@ const About = () => {
       color: 'from-emerald-500 to-teal-500',
       bgColor: 'bg-emerald-500/10',
       borderColor: 'border-emerald-500/20',
-      direction: 30
+      direction: 20
     },
   ];
+
+  // Container animation for all left side content
+  const leftContainerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
+        duration: 0.5
+      }
+    }
+  };
+
+  const leftItemVariants = {
+    hidden: { opacity: 0, x: -30 },
+    visible: { 
+      opacity: 1, 
+      x: 0,
+      transition: { duration: 0.5, ease: "easeOut" }
+    }
+  };
+
+  const cardVariants = {
+    hidden: (custom) => ({ 
+      opacity: 0, 
+      x: custom 
+    }),
+    visible: { 
+      opacity: 1, 
+      x: 0,
+      transition: { duration: 0.5, ease: "easeOut" }
+    }
+  };
 
   return (
     <section 
@@ -161,15 +195,16 @@ const About = () => {
 
         {/* CONTENT */}
         <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
-          {/* LEFT - Text Content */}
+          {/* LEFT - Text Content with synchronized animations */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            variants={leftContainerVariants}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
             className="space-y-6"
           >
-            <div>
+            {/* Who Am I Section */}
+            <motion.div variants={leftItemVariants}>
               <h3 className="text-3xl md:text-4xl font-bold mb-4 text-white">
                 Who Am{' '}
                 <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
@@ -192,26 +227,23 @@ const About = () => {
                 amazing digital experiences every day. I believe in writing
                 clean, maintainable code that makes a difference.
               </p>
-            </div>
+            </motion.div>
 
-            {/* FEATURES - Smooth left/right animations on mobile */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-4">
+            {/* FEATURES Cards - Animate together with Who Am I */}
+            <motion.div 
+              variants={leftItemVariants}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-4"
+            >
               {features.map((feature, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, x: feature.direction }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ 
-                    duration: 0.5,
-                    delay: 0.1 + index * 0.1,
-                    ease: [0.25, 0.1, 0.25, 1]
-                  }}
-                  className={`group relative overflow-hidden rounded-2xl ${feature.bgColor} border ${feature.borderColor} p-4 transition-all duration-300 hover:shadow-lg`}
+                  custom={feature.direction}
+                  variants={cardVariants}
+                  className={`group relative overflow-hidden rounded-2xl ${feature.bgColor} border ${feature.borderColor} p-4 transition-all duration-200 hover:shadow-lg`}
                   style={{ background: 'rgba(17, 24, 39, 0.8)' }}
                 >
                   {/* Glow Effect */}
-                  <div className={`absolute inset-0 bg-gradient-to-r ${feature.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
+                  <div className={`absolute inset-0 bg-gradient-to-r ${feature.color} opacity-0 group-hover:opacity-10 transition-opacity duration-200`} />
 
                   <div className="relative z-10 text-center">
                     <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center mx-auto mb-3 shadow-lg`}>
@@ -228,10 +260,13 @@ const About = () => {
                   </div>
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
 
             {/* Stats Section with Animated Counting */}
-            <div className="grid grid-cols-3 gap-4 pt-6 border-t border-gray-800">
+            <motion.div 
+              variants={leftItemVariants}
+              className="grid grid-cols-3 gap-4 pt-6 border-t border-gray-800"
+            >
               {/* Years Experience */}
               <div className="text-center group">
                 <FiAward className="w-6 h-6 text-blue-400 mx-auto mb-2 transition-transform duration-300 group-hover:scale-110" />
@@ -258,7 +293,7 @@ const About = () => {
                 </div>
                 <div className="text-gray-500 text-xs md:text-sm">Happy Clients</div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* RIGHT - Image with Enhanced Effects */}
@@ -266,7 +301,7 @@ const About = () => {
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className="relative"
           >
             {/* Animated Border */}
@@ -293,7 +328,7 @@ const About = () => {
                 initial={{ y: 20, opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: 0.8, duration: 0.5 }}
+                transition={{ delay: 0.6, duration: 0.5 }}
                 className="absolute bottom-6 left-6 right-6 bg-black/60 backdrop-blur-md rounded-xl p-3 border border-white/10"
               >
                 <div className="flex items-center justify-between">
