@@ -81,7 +81,8 @@ const About = () => {
       desc: 'Writing maintainable and scalable code with best practices',
       color: 'from-blue-500 to-cyan-400',
       bgColor: 'bg-blue-500/10',
-      borderColor: 'border-blue-500/20'
+      borderColor: 'border-blue-500/20',
+      direction: -30
     },
     {
       icon: FiZap,
@@ -89,7 +90,8 @@ const About = () => {
       desc: 'Optimized for speed and efficiency with modern tools',
       color: 'from-purple-500 to-pink-500',
       bgColor: 'bg-purple-500/10',
-      borderColor: 'border-purple-500/20'
+      borderColor: 'border-purple-500/20',
+      direction: 0
     },
     {
       icon: FiUsers,
@@ -97,7 +99,8 @@ const About = () => {
       desc: 'Excellent collaboration skills and agile methodology',
       color: 'from-emerald-500 to-teal-500',
       bgColor: 'bg-emerald-500/10',
-      borderColor: 'border-emerald-500/20'
+      borderColor: 'border-emerald-500/20',
+      direction: 30
     },
   ];
 
@@ -191,27 +194,25 @@ const About = () => {
               </p>
             </div>
 
-            {/* FEATURES - Smooth animation on mobile */}
+            {/* FEATURES - Smooth left/right animations on mobile */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-4">
               {features.map((feature, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, x: feature.direction }}
+                  whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ 
-                    delay: 0.2 + index * 0.1,
-                    duration: 0.4,
-                    ease: "easeOut"
+                    duration: 0.5,
+                    delay: 0.1 + index * 0.1,
+                    ease: [0.25, 0.1, 0.25, 1]
                   }}
-                  whileHover={{ y: -5 }}
                   className={`group relative overflow-hidden rounded-2xl ${feature.bgColor} border ${feature.borderColor} p-4 transition-all duration-300 hover:shadow-lg`}
                   style={{ background: 'rgba(17, 24, 39, 0.8)' }}
                 >
-                  {/* Glow Effect - smoother */}
+                  {/* Glow Effect */}
                   <div className={`absolute inset-0 bg-gradient-to-r ${feature.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
-                  
-                  {/* Simple shine effect - removed complex transform for mobile smoothness */}
+
                   <div className="relative z-10 text-center">
                     <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center mx-auto mb-3 shadow-lg`}>
                       <feature.icon className="w-5 h-5 text-white" />
@@ -284,7 +285,7 @@ const About = () => {
               {/* Gradient Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
               
-              {/* Hover Overlay - simplified for mobile */}
+              {/* Hover Overlay */}
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
               {/* Bottom Badge */}
